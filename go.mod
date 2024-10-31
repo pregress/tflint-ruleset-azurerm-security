@@ -1,6 +1,8 @@
 module github.com/terraform-linters/tflint-ruleset-template
 
-go 1.22.2
+go 1.22.5
+
+toolchain go1.22.8
 
 require (
 	github.com/hashicorp/hcl/v2 v2.22.0
@@ -22,6 +24,7 @@ require (
 	github.com/mitchellh/go-testing-interface v0.0.0-20171004221916-a61a99592b77 // indirect
 	github.com/mitchellh/go-wordwrap v0.0.0-20150314170334-ad45545899c7 // indirect
 	github.com/oklog/run v1.0.0 // indirect
+	github.com/terraform-linters/tflint-ruleset-azurerm v0.27.0 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/zclconf/go-cty v1.15.0 // indirect
