@@ -22,10 +22,28 @@ archives:
     format: zip
     files:
       - none*
+changelog:
+  skip: true
 checksum:
   name_template: 'checksums.txt'
   extra_files:
     - glob: ./dist/raw/*
 signs:
-  - artifacts: checksum
-    args: ["--batch", "-u", "{{ .Env.GPG_FINGERPRINT }}", "--output", "${signature}", "--detach-sign", "${artifact}"]
+  - cmd: cosign
+    signature: '${artifact}.keyless.sig'
+    certificate: '${artifact}.pem'
+    output: true
+    artifacts: checksum
+    args:
+      - sign-blob
+      - '--output-certificate=${certificate}'
+      - '--output-signature=${signature}'
+      - '${artifact}'
+      - --yes
+release:
+  github:
+    owner: pregress
+    name: tflint-ruleset-azurerm-security
+  draft: true
+snapshot:
+  name_template: "{{ .Tag }}-dev"
