@@ -13,19 +13,11 @@ This is a  repository for an azurerm tflint rule set to enforce security best pr
 You can install the plugin with `tflint --init`. Declare a config in `.tflint.hcl` as follows:
 
 ```hcl
-plugin "template" {
+plugin "azurerm-security" {
   enabled = true
 
-  version = "0.1.0"
+  version = "0.1.2"
   source  = "github.com/pregress/tflint-ruleset-azurerm-security"
-
-  signing_key = <<-KEY
-  -----BEGIN PGP PUBLIC KEY BLOCK-----
-  mQINBGCqS2YBEADJ7gHktSV5NgUe08hD/uWWPwY07d5WZ1+F9I9SoiK/mtcNGz4P
-  JLrYAIUTMBvrxk3I+kuwhp7MCk7CD/tRVkPRIklONgtKsp8jCke7FB3PuFlP/ptL
-  SlbaXx53FCZSOzCJo9puZajVWydoGfnZi5apddd11Zw1FuJma3YElHZ1A1D2YvrF
-  ...
-  KEY
 }
 ```
 
@@ -54,13 +46,8 @@ You can easily install the built plugin with the following:
 $ make install
 ```
 
-You can run the built plugin like the following:
+Note that if you install the plugin with make install, you must omit the version and source attributes in .tflint.hcl:
 
-```
-$ cat << EOS > .tflint.hcl
-plugin "template" {
-  enabled = true
+plugin "azurerm-security" {
+    enabled = true
 }
-EOS
-$ tflint
-```

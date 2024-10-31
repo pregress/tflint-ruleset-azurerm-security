@@ -10,7 +10,7 @@ func main() {
 	plugin.Serve(&plugin.ServeOpts{
 		RuleSet: &tflint.BuiltinRuleSet{
 			Name:    "azurerm-security",
-			Version: "0.1.1",
+			Version: "0.1.2",
 			Rules: []tflint.Rule{
 				rules.NewAzurermLinuxWebAppFtpsState(),
 				rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
