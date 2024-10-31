@@ -16,6 +16,8 @@ func main() {
 				rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
 				rules.NewAzurermMssqlDatabaseEncryption(),
 				rules.NewAzurermStorageAccountUnsecureTls(),
+				rules.NewAzurermWindowsWebAppFtpsState(),
+				rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
 			},
 		},
 	})
