@@ -12,7 +12,12 @@ func main() {
 			Name:    "azurerm-security",
 			Version: "0.1.0",
 			Rules: []tflint.Rule{
+				rules.NewAzurermLinuxWebAppFtpsState(),
+				rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
+				rules.NewAzurermMssqlDatabaseEncryption(),
 				rules.NewAzurermStorageAccountUnsecureTls(),
+				rules.NewAzurermWindowsWebAppFtpsState(),
+				rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
 			},
 		},
 	})
