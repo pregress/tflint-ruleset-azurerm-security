@@ -17,7 +17,9 @@ func Test_AzurermLinuxWebAppMinimumTlsVersion(t *testing.T) {
 			Name: "minimum_tls_version below 1.2",
 			Content: `
 resource "azurerm_linux_web_app" "example" {
-    minimum_tls_version = "1.0"
+    site_config {
+        minimum_tls_version = "1.0"
+    }
 }`,
 			Expected: helper.Issues{
 				{
@@ -25,8 +27,14 @@ resource "azurerm_linux_web_app" "example" {
 					Message: "minimum_tls_version is set to 1.0, should be 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
-						Start:    hcl.Pos{Line: 3, Column: 27}, 
-						End:      hcl.Pos{Line: 3, Column: 32},
+						Start: hcl.Pos{
+							Line:   4,
+							Column: 31,
+						},
+						End: hcl.Pos{
+							Line:   4,
+							Column: 36,
+						},
 					},
 				},
 			},
@@ -35,7 +43,9 @@ resource "azurerm_linux_web_app" "example" {
 			Name: "minimum_tls_version set to 1.2",
 			Content: `
 resource "azurerm_linux_web_app" "example" {
-    minimum_tls_version = "1.2"
+    site_config {
+        minimum_tls_version = "1.2"
+    }
 }`,
 			Expected: helper.Issues{},
 		},
@@ -43,15 +53,72 @@ resource "azurerm_linux_web_app" "example" {
 			Name: "minimum_tls_version attribute missing",
 			Content: `
 resource "azurerm_linux_web_app" "example" {
+    site_config {
+    }
 }`,
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermLinuxWebAppMinimumTlsVersion(),
-					Message: "minimum_tls_version is missing, should be set to 1.2 or higher",
+					Message: "minimum_tls_version is missing in site_config, should be set to 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
-						Start:    hcl.Pos{Line: 2, Column: 1},
-						End:      hcl.Pos{Line: 2, Column: 43},
+						Start: hcl.Pos{
+							Line:   3,
+							Column: 5,
+						},
+						End: hcl.Pos{
+							Line:   3,
+							Column: 16,
+						},
+					},
+				},
+			},
+		},
+		{
+			Name: "site_config block missing",
+			Content: `
+resource "azurerm_linux_web_app" "example" {
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermLinuxWebAppMinimumTlsVersion(),
+					Message: "site_config block is missing, minimum_tls_version should be set to 1.2 or higher",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   2,
+							Column: 1,
+						},
+						End: hcl.Pos{
+							Line:   2,
+							Column: 43,
+						},
+					},
+				},
+			},
+		},
+		{
+			Name: "minimum_tls_version set to 1.3",
+			Content: `
+resource "azurerm_linux_web_app" "example" {
+    site_config {
+        minimum_tls_version = "1.3"
+    }
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermLinuxWebAppMinimumTlsVersion(),
+					Message: "minimum_tls_version is set to 1.3, should be 1.2 or higher",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   4,
+							Column: 31,
+						},
+						End: hcl.Pos{
+							Line:   4,
+							Column: 36,
+						},
 					},
 				},
 			},
