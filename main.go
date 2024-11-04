@@ -13,10 +13,12 @@ func CreateRuleSet() *tflint.BuiltinRuleSet {
 		Version: "0.1.2",
 		Rules: []tflint.Rule{
 			rules.NewAzurermLinuxWebAppFtpsState(),
+			rules.NewAzurermLinuxWebAppHttpsOnly(),
 			rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
 			rules.NewAzurermMssqlDatabaseEncryption(),
 			rules.NewAzurermStorageAccountUnsecureTls(),
 			rules.NewAzurermWindowsWebAppFtpsState(),
+			rules.NewAzurermWindowsWebAppHttpsOnly(),
 			rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
 		},
 	}
