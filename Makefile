@@ -13,5 +13,6 @@ install: build
 lint:
 	golint --set_exit_status $$(go list ./...)
 	go vet ./...
+	
 tools:
 	go install golang.org/x/lint/golint@latest
