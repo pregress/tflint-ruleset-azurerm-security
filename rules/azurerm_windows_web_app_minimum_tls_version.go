@@ -12,16 +12,16 @@ type AzurermWindowsWebAppMinimumTlsVersion struct {
 	tflint.DefaultRule
 
 	resourceType  string
-	attributeName string
-	version    string
+	attributePath []string
+	version       string
 }
 
 // NewAzurermWindowsWebAppMinimumTlsVersion returns a new rule instance
 func NewAzurermWindowsWebAppMinimumTlsVersion() *AzurermWindowsWebAppMinimumTlsVersion {
 	return &AzurermWindowsWebAppMinimumTlsVersion{
 		resourceType:  "azurerm_windows_web_app",
-		attributeName: "minimum_tls_version",
-		version:    "1.2",
+		attributePath: []string{"site_config", "minimum_tls_version"},
+		version:       "1.2",
 	}
 }
 
@@ -37,7 +37,7 @@ func (r *AzurermWindowsWebAppMinimumTlsVersion) Enabled() bool {
 
 // Severity returns the rule severity
 func (r *AzurermWindowsWebAppMinimumTlsVersion) Severity() tflint.Severity {
-	return tflint.ERROR
+	return tflint.WARNING
 }
 
 // Link returns the rule reference link
@@ -48,8 +48,15 @@ func (r *AzurermWindowsWebAppMinimumTlsVersion) Link() string {
 // Check verifies that minimum_tls_version is at least "1.2"
 func (r *AzurermWindowsWebAppMinimumTlsVersion) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
-		Attributes: []hclext.AttributeSchema{
-			{Name: r.attributeName},
+		Blocks: []hclext.BlockSchema{
+			{
+				Type: "site_config",
+				Body: &hclext.BodySchema{
+					Attributes: []hclext.AttributeSchema{
+						{Name: "minimum_tls_version"},
+					},
+				},
+			},
 		},
 	}, nil)
 	if err != nil {
@@ -57,13 +64,23 @@ func (r *AzurermWindowsWebAppMinimumTlsVersion) Check(runner tflint.Runner) erro
 	}
 
 	for _, resource := range resources.Blocks {
-		attribute, exists := resource.Body.Attributes[r.attributeName]
-		if !exists {
-			// Emit issue if minimum_tls_version attribute is missing
+		siteConfigBlocks := resource.Body.Blocks.OfType("site_config")
+		if len(siteConfigBlocks) == 0 {
 			runner.EmitIssue(
 				r,
-				fmt.Sprintf("%s is missing, should be set to %s or higher", r.attributeName, r.version),
+				"site_config block is missing, minimum_tls_version should be set to 1.2 or higher",
 				resource.DefRange,
+			)
+			continue
+		}
+
+		siteConfig := siteConfigBlocks[0]
+		attribute, exists := siteConfig.Body.Attributes["minimum_tls_version"]
+		if !exists {
+			runner.EmitIssue(
+				r,
+				"minimum_tls_version is missing in site_config, should be set to 1.2 or higher",
+				siteConfig.DefRange,
 			)
 			continue
 		}
@@ -72,7 +89,7 @@ func (r *AzurermWindowsWebAppMinimumTlsVersion) Check(runner tflint.Runner) erro
 			if val != r.version {
 				runner.EmitIssue(
 					r,
-					fmt.Sprintf("%s is set to %s, should be %s or higher", r.attributeName, val, r.version),
+					fmt.Sprintf("minimum_tls_version is set to %s, should be %s or higher", val, r.version),
 					attribute.Expr.Range(),
 				)
 			}

@@ -23,14 +23,7 @@ plugin "azurerm-security" {
 
 ## Rules
 
-|Name|Description|Severity|Enabled|Link|
-| --- | --- | --- | --- | --- |
-|azurerm_linux_web_app_ftps_state|Disable sftp to a linux web app |ERROR|✔||
-|azurerm_linux_web_app_minimum_tls_version|Enforce TLS 1.2 on linux web apps |ERROR|✔||
-|azurerm_mssql_database_transparent_data_encryption_enabled|Enforce transparant data encryption|ERROR|✔||
-|azurerm_storage_account_tls_version|Enforce TLS 1.2 on storage accounts |ERROR|✔||
-|azurerm_windows_web_app_ftps_state|Disable sftp to a windows web app |ERROR|✔||
-|azurerm_windows_web_app_minimum_tls_version|Enforce TLS 1.2 on windows web apps |ERROR|✔||
+See the [documentation](docs/README.md).
 
 ## Building the plugin
 
@@ -48,6 +41,8 @@ $ make install
 
 Note that if you install the plugin with make install, you must omit the version and source attributes in .tflint.hcl:
 
+```
 plugin "azurerm-security" {
     enabled = true
 }
+```

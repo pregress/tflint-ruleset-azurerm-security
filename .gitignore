@@ -1,2 +1,4 @@
 # don't track built binary
 /tflint-ruleset-azurerm-security
+
+tools/

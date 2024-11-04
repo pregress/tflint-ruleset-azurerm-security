@@ -1,3 +1,4 @@
+// main.go
 package main
 
 import (
@@ -6,19 +7,23 @@ import (
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/rules"
 )
 
+func CreateRuleSet() *tflint.BuiltinRuleSet {
+	return &tflint.BuiltinRuleSet{
+		Name:    "azurerm-security",
+		Version: "0.1.2",
+		Rules: []tflint.Rule{
+			rules.NewAzurermLinuxWebAppFtpsState(),
+			rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
+			rules.NewAzurermMssqlDatabaseEncryption(),
+			rules.NewAzurermStorageAccountUnsecureTls(),
+			rules.NewAzurermWindowsWebAppFtpsState(),
+			rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
+		},
+	}
+}
+
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
-		RuleSet: &tflint.BuiltinRuleSet{
-			Name:    "azurerm-security",
-			Version: "0.1.2",
-			Rules: []tflint.Rule{
-				rules.NewAzurermLinuxWebAppFtpsState(),
-				rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
-				rules.NewAzurermMssqlDatabaseEncryption(),
-				rules.NewAzurermStorageAccountUnsecureTls(),
-				rules.NewAzurermWindowsWebAppFtpsState(),
-				rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
-			},
-		},
+		RuleSet: CreateRuleSet(),
 	})
 }
