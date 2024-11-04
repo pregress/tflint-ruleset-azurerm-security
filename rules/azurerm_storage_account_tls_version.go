@@ -8,8 +8,8 @@ import (
 	// "github.com/terraform-linters/tflint-ruleset-azurerm/project"
 )
 
-// AzurermStorageAccountUnsecureTls checks the pattern is valid
-type AzurermStorageAccountUnsecureTls struct {
+// AzurermStorageAccountUnsecureTLS checks the pattern is valid
+type AzurermStorageAccountUnsecureTLS struct {
 	tflint.DefaultRule
 
 	resourceType  string
@@ -17,9 +17,9 @@ type AzurermStorageAccountUnsecureTls struct {
 	enum          []string
 }
 
-// NewAzurermStorageAccountUnsecureTls returns new rule with default attributes
-func NewAzurermStorageAccountUnsecureTls() *AzurermStorageAccountUnsecureTls {
-	return &AzurermStorageAccountUnsecureTls{
+// NewAzurermStorageAccountUnsecureTLS returns new rule with default attributes
+func NewAzurermStorageAccountUnsecureTLS() *AzurermStorageAccountUnsecureTLS {
+	return &AzurermStorageAccountUnsecureTLS{
 		resourceType:  "azurerm_storage_account",
 		attributeName: "min_tls_version",
 		enum: []string{
@@ -30,27 +30,27 @@ func NewAzurermStorageAccountUnsecureTls() *AzurermStorageAccountUnsecureTls {
 }
 
 // Name returns the rule name
-func (r *AzurermStorageAccountUnsecureTls) Name() string {
+func (r *AzurermStorageAccountUnsecureTLS) Name() string {
 	return "azurerm_storage_account_unsecure_tls"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermStorageAccountUnsecureTls) Enabled() bool {
+func (r *AzurermStorageAccountUnsecureTLS) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermStorageAccountUnsecureTls) Severity() tflint.Severity {
+func (r *AzurermStorageAccountUnsecureTLS) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermStorageAccountUnsecureTls) Link() string {
+func (r *AzurermStorageAccountUnsecureTLS) Link() string {
 	return ""
 }
 
 // Check checks the pattern is valid
-func (r *AzurermStorageAccountUnsecureTls) Check(runner tflint.Runner) error {
+func (r *AzurermStorageAccountUnsecureTLS) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

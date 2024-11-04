@@ -5,44 +5,44 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermWindowsWebAppHttpsOnly checks that transparent data encryption is enabled
-type AzurermWindowsWebAppHttpsOnly struct {
+// AzurermWindowsWebAppHTTPSOnly checks that transparent data encryption is enabled
+type AzurermWindowsWebAppHTTPSOnly struct {
 	tflint.DefaultRule
 
 	resourceType  string
 	attributeName string
 }
 
-// NewAzurermWindowsWebAppHttpsOnly returns a new rule instance
-func NewAzurermWindowsWebAppHttpsOnly() *AzurermWindowsWebAppHttpsOnly {
-	return &AzurermWindowsWebAppHttpsOnly{
+// NewAzurermWindowsWebAppHTTPSOnly returns a new rule instance
+func NewAzurermWindowsWebAppHTTPSOnly() *AzurermWindowsWebAppHTTPSOnly {
+	return &AzurermWindowsWebAppHTTPSOnly{
 		resourceType:  "azurerm_windows_web_app",
 		attributeName: "https_only",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermWindowsWebAppHttpsOnly) Name() string {
+func (r *AzurermWindowsWebAppHTTPSOnly) Name() string {
 	return "azurerm_windows_web_app_https_only"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermWindowsWebAppHttpsOnly) Enabled() bool {
+func (r *AzurermWindowsWebAppHTTPSOnly) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermWindowsWebAppHttpsOnly) Severity() tflint.Severity {
+func (r *AzurermWindowsWebAppHTTPSOnly) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermWindowsWebAppHttpsOnly) Link() string {
+func (r *AzurermWindowsWebAppHTTPSOnly) Link() string {
 	return ""
 }
 
 // Check checks if transparent data encryption is enabled
-func (r *AzurermWindowsWebAppHttpsOnly) Check(runner tflint.Runner) error {
+func (r *AzurermWindowsWebAppHTTPSOnly) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

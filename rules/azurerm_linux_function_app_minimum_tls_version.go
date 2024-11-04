@@ -7,8 +7,8 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermLinuxFunctionAppMinimumTlsVersion checks that minimum_tls_version is set to at least "1.2"
-type AzurermLinuxFunctionAppMinimumTlsVersion struct {
+// AzurermLinuxFunctionAppMinimumTLSVersion checks that minimum_tls_version is set to at least "1.2"
+type AzurermLinuxFunctionAppMinimumTLSVersion struct {
 	tflint.DefaultRule
 
 	resourceType  string
@@ -16,9 +16,9 @@ type AzurermLinuxFunctionAppMinimumTlsVersion struct {
 	version       string
 }
 
-// NewAzurermLinuxFunctionAppMinimumTlsVersion returns a new rule instance
-func NewAzurermLinuxFunctionAppMinimumTlsVersion() *AzurermLinuxFunctionAppMinimumTlsVersion {
-	return &AzurermLinuxFunctionAppMinimumTlsVersion{
+// NewAzurermLinuxFunctionAppMinimumTLSVersion returns a new rule instance
+func NewAzurermLinuxFunctionAppMinimumTLSVersion() *AzurermLinuxFunctionAppMinimumTLSVersion {
+	return &AzurermLinuxFunctionAppMinimumTLSVersion{
 		resourceType:  "azurerm_linux_function_app",
 		attributePath: []string{"site_config", "minimum_tls_version"},
 		version:       "1.2",
@@ -26,27 +26,27 @@ func NewAzurermLinuxFunctionAppMinimumTlsVersion() *AzurermLinuxFunctionAppMinim
 }
 
 // Name returns the rule name
-func (r *AzurermLinuxFunctionAppMinimumTlsVersion) Name() string {
+func (r *AzurermLinuxFunctionAppMinimumTLSVersion) Name() string {
 	return "azurerm_linux_function_app_minimum_tls_version"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermLinuxFunctionAppMinimumTlsVersion) Enabled() bool {
+func (r *AzurermLinuxFunctionAppMinimumTLSVersion) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermLinuxFunctionAppMinimumTlsVersion) Severity() tflint.Severity {
+func (r *AzurermLinuxFunctionAppMinimumTLSVersion) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermLinuxFunctionAppMinimumTlsVersion) Link() string {
+func (r *AzurermLinuxFunctionAppMinimumTLSVersion) Link() string {
 	return ""
 }
 
 // Check verifies that minimum_tls_version is at least "1.2"
-func (r *AzurermLinuxFunctionAppMinimumTlsVersion) Check(runner tflint.Runner) error {
+func (r *AzurermLinuxFunctionAppMinimumTLSVersion) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Blocks: []hclext.BlockSchema{
 			{

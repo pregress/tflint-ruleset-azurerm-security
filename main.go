@@ -7,33 +7,33 @@ import (
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/rules"
 )
 
-func CreateRuleSet() *tflint.BuiltinRuleSet {
+func createRuleSet() *tflint.BuiltinRuleSet {
 	return &tflint.BuiltinRuleSet{
 		Name:    "azurerm-security",
 		Version: "0.1.3",
 		Rules: []tflint.Rule{
 			rules.NewAzurermKeyVaultPublicNetworkAccessEnabled(),
 			rules.NewAzurermLinuxFunctionAppFtpsState(),
-			rules.NewAzurermLinuxFunctionAppHttpsOnly(),
-			rules.NewAzurermLinuxFunctionAppMinimumTlsVersion(),
+			rules.NewAzurermLinuxFunctionAppHTTPSOnly(),
+			rules.NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 			rules.NewAzurermLinuxWebAppFtpsState(),
-			rules.NewAzurermLinuxWebAppHttpsOnly(),
-			rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
+			rules.NewAzurermLinuxWebAppHTTPSOnly(),
+			rules.NewAzurermLinuxWebAppMinimumTLSVersion(),
 			rules.NewAzurermMssqlDatabaseEncryption(),
 			rules.NewAzurermStorageAccountPublicNetworkAccessEnabled(),
-			rules.NewAzurermStorageAccountUnsecureTls(),
+			rules.NewAzurermStorageAccountUnsecureTLS(),
 			rules.NewAzurermWindowsFunctionAppFtpsState(),
-			rules.NewAzurermWindowsFunctionAppHttpsOnly(),
-			rules.NewAzurermWindowsFunctionAppMinimumTlsVersion(),
+			rules.NewAzurermWindowsFunctionAppHTTPSOnly(),
+			rules.NewAzurermWindowsFunctionAppMinimumTLSVersion(),
 			rules.NewAzurermWindowsWebAppFtpsState(),
-			rules.NewAzurermWindowsWebAppHttpsOnly(),
-			rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
+			rules.NewAzurermWindowsWebAppHTTPSOnly(),
+			rules.NewAzurermWindowsWebAppMinimumTLSVersion(),
 		},
 	}
 }
 
 func main() {
 	plugin.Serve(&plugin.ServeOpts{
-		RuleSet: CreateRuleSet(),
+		RuleSet: createRuleSet(),
 	})
 }

@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermLinuxFunctionAppMinimumTlsVersion(t *testing.T) {
+func Test_AzurermLinuxFunctionAppMinimumTLSVersion(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -23,7 +23,7 @@ resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermLinuxFunctionAppMinimumTlsVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "minimum_tls_version is set to 1.0, should be 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -58,7 +58,7 @@ resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermLinuxFunctionAppMinimumTlsVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "minimum_tls_version is missing in site_config, should be set to 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -81,7 +81,7 @@ resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermLinuxFunctionAppMinimumTlsVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "site_config block is missing, minimum_tls_version should be set to 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -107,7 +107,7 @@ resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermLinuxFunctionAppMinimumTlsVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "minimum_tls_version is set to 1.3, should be 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -125,7 +125,7 @@ resource "azurerm_linux_function_app" "example" {
 		},
 	}
 
-	rule := NewAzurermLinuxFunctionAppMinimumTlsVersion()
+	rule := NewAzurermLinuxFunctionAppMinimumTLSVersion()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

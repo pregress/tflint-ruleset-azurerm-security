@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermWindowsWebAppHttpsOnly(t *testing.T) {
+func Test_AzurermWindowsWebAppHTTPSOnly(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -21,7 +21,7 @@ resource "azurerm_windows_web_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppHttpsOnly(),
+					Rule:    NewAzurermWindowsWebAppHTTPSOnly(),
 					Message: "https_only should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -38,7 +38,7 @@ resource "azurerm_windows_web_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppHttpsOnly(),
+					Rule:    NewAzurermWindowsWebAppHTTPSOnly(),
 					Message: "https_only is not defined and should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -58,7 +58,7 @@ resource "azurerm_windows_web_app" "example" {
 		},
 	}
 
-	rule := NewAzurermWindowsWebAppHttpsOnly()
+	rule := NewAzurermWindowsWebAppHTTPSOnly()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermLinuxFunctionAppHttpsOnly(t *testing.T) {
+func Test_AzurermLinuxFunctionAppHTTPSOnly(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -21,7 +21,7 @@ resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermLinuxFunctionAppHttpsOnly(),
+					Rule:    NewAzurermLinuxFunctionAppHTTPSOnly(),
 					Message: "https_only should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -38,7 +38,7 @@ resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermLinuxFunctionAppHttpsOnly(),
+					Rule:    NewAzurermLinuxFunctionAppHTTPSOnly(),
 					Message: "https_only is not defined and should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -58,7 +58,7 @@ resource "azurerm_linux_function_app" "example" {
 		},
 	}
 
-	rule := NewAzurermLinuxFunctionAppHttpsOnly()
+	rule := NewAzurermLinuxFunctionAppHTTPSOnly()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {
