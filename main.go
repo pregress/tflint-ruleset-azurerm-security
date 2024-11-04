@@ -16,6 +16,7 @@ func CreateRuleSet() *tflint.BuiltinRuleSet {
 			rules.NewAzurermLinuxWebAppHttpsOnly(),
 			rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
 			rules.NewAzurermMssqlDatabaseEncryption(),
+			rules.NewAzurermStorageAccountPublicNetworkAccessEnabled(),
 			rules.NewAzurermStorageAccountUnsecureTls(),
 			rules.NewAzurermWindowsWebAppFtpsState(),
 			rules.NewAzurermWindowsWebAppHttpsOnly(),
