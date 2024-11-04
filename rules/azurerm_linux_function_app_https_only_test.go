@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermWindowsWebAppHTTPSOnly(t *testing.T) {
+func Test_AzurermLinuxFunctionAppHTTPSOnly(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -16,12 +16,12 @@ func Test_AzurermWindowsWebAppHTTPSOnly(t *testing.T) {
 		{
 			Name: "https_only disabled",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
     https_only = false
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppHTTPSOnly(),
+					Rule:    NewAzurermLinuxFunctionAppHTTPSOnly(),
 					Message: "https_only should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -34,16 +34,16 @@ resource "azurerm_windows_web_app" "example" {
 		{
 			Name: "https_only attribute missing",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppHTTPSOnly(),
+					Rule:    NewAzurermLinuxFunctionAppHTTPSOnly(),
 					Message: "https_only is not defined and should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 2, Column: 1},
-						End:      hcl.Pos{Line: 2, Column: 45},
+						End:      hcl.Pos{Line: 2, Column: 48},
 					},
 				},
 			},
@@ -51,14 +51,14 @@ resource "azurerm_windows_web_app" "example" {
 		{
 			Name: "https_only enabled",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
     https_only = true
 }`,
 			Expected: helper.Issues{},
 		},
 	}
 
-	rule := NewAzurermWindowsWebAppHTTPSOnly()
+	rule := NewAzurermLinuxFunctionAppHTTPSOnly()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

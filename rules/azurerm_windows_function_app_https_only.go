@@ -5,44 +5,44 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermWindowsWebAppHTTPSOnly checks that transparent data encryption is enabled
-type AzurermWindowsWebAppHTTPSOnly struct {
+// AzurermWindowsFunctionAppHTTPSOnly checks that transparent data encryption is enabled
+type AzurermWindowsFunctionAppHTTPSOnly struct {
 	tflint.DefaultRule
 
 	resourceType  string
 	attributeName string
 }
 
-// NewAzurermWindowsWebAppHTTPSOnly returns a new rule instance
-func NewAzurermWindowsWebAppHTTPSOnly() *AzurermWindowsWebAppHTTPSOnly {
-	return &AzurermWindowsWebAppHTTPSOnly{
-		resourceType:  "azurerm_windows_web_app",
+// NewAzurermWindowsFunctionAppHTTPSOnly returns a new rule instance
+func NewAzurermWindowsFunctionAppHTTPSOnly() *AzurermWindowsFunctionAppHTTPSOnly {
+	return &AzurermWindowsFunctionAppHTTPSOnly{
+		resourceType:  "azurerm_windows_function_app",
 		attributeName: "https_only",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermWindowsWebAppHTTPSOnly) Name() string {
-	return "azurerm_windows_web_app_https_only"
+func (r *AzurermWindowsFunctionAppHTTPSOnly) Name() string {
+	return "azurerm_windows_function_app_https_only"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermWindowsWebAppHTTPSOnly) Enabled() bool {
+func (r *AzurermWindowsFunctionAppHTTPSOnly) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermWindowsWebAppHTTPSOnly) Severity() tflint.Severity {
+func (r *AzurermWindowsFunctionAppHTTPSOnly) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermWindowsWebAppHTTPSOnly) Link() string {
+func (r *AzurermWindowsFunctionAppHTTPSOnly) Link() string {
 	return ""
 }
 
 // Check checks if transparent data encryption is enabled
-func (r *AzurermWindowsWebAppHTTPSOnly) Check(runner tflint.Runner) error {
+func (r *AzurermWindowsFunctionAppHTTPSOnly) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

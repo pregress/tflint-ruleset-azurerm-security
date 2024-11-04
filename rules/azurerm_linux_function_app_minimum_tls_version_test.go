@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermWindowsWebAppMinimumTLSVersion(t *testing.T) {
+func Test_AzurermLinuxFunctionAppMinimumTLSVersion(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -16,14 +16,14 @@ func Test_AzurermWindowsWebAppMinimumTLSVersion(t *testing.T) {
 		{
 			Name: "minimum_tls_version below 1.2",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
     site_config {
         minimum_tls_version = "1.0"
     }
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppMinimumTLSVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "minimum_tls_version is set to 1.0, should be 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -42,7 +42,7 @@ resource "azurerm_windows_web_app" "example" {
 		{
 			Name: "minimum_tls_version set to 1.2",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
     site_config {
         minimum_tls_version = "1.2"
     }
@@ -52,13 +52,13 @@ resource "azurerm_windows_web_app" "example" {
 		{
 			Name: "minimum_tls_version attribute missing",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
     site_config {
     }
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppMinimumTLSVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "minimum_tls_version is missing in site_config, should be set to 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -77,11 +77,11 @@ resource "azurerm_windows_web_app" "example" {
 		{
 			Name: "site_config block missing",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppMinimumTLSVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "site_config block is missing, minimum_tls_version should be set to 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -91,7 +91,7 @@ resource "azurerm_windows_web_app" "example" {
 						},
 						End: hcl.Pos{
 							Line:   2,
-							Column: 45,
+							Column: 48,
 						},
 					},
 				},
@@ -100,14 +100,14 @@ resource "azurerm_windows_web_app" "example" {
 		{
 			Name: "minimum_tls_version set to 1.3",
 			Content: `
-resource "azurerm_windows_web_app" "example" {
+resource "azurerm_linux_function_app" "example" {
     site_config {
         minimum_tls_version = "1.3"
     }
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermWindowsWebAppMinimumTLSVersion(),
+					Rule:    NewAzurermLinuxFunctionAppMinimumTLSVersion(),
 					Message: "minimum_tls_version is set to 1.3, should be 1.2 or higher",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -125,7 +125,7 @@ resource "azurerm_windows_web_app" "example" {
 		},
 	}
 
-	rule := NewAzurermWindowsWebAppMinimumTLSVersion()
+	rule := NewAzurermLinuxFunctionAppMinimumTLSVersion()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

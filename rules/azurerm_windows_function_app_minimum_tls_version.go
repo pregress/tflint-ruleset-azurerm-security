@@ -7,8 +7,8 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermWindowsWebAppMinimumTLSVersion checks that minimum_tls_version is set to at least "1.2"
-type AzurermWindowsWebAppMinimumTLSVersion struct {
+// AzurermWindowsFunctionAppMinimumTLSVersion checks that minimum_tls_version is set to at least "1.2"
+type AzurermWindowsFunctionAppMinimumTLSVersion struct {
 	tflint.DefaultRule
 
 	resourceType  string
@@ -16,37 +16,37 @@ type AzurermWindowsWebAppMinimumTLSVersion struct {
 	version       string
 }
 
-// NewAzurermWindowsWebAppMinimumTLSVersion returns a new rule instance
-func NewAzurermWindowsWebAppMinimumTLSVersion() *AzurermWindowsWebAppMinimumTLSVersion {
-	return &AzurermWindowsWebAppMinimumTLSVersion{
-		resourceType:  "azurerm_windows_web_app",
+// NewAzurermWindowsFunctionAppMinimumTLSVersion returns a new rule instance
+func NewAzurermWindowsFunctionAppMinimumTLSVersion() *AzurermWindowsFunctionAppMinimumTLSVersion {
+	return &AzurermWindowsFunctionAppMinimumTLSVersion{
+		resourceType:  "azurerm_windows_function_app",
 		attributePath: []string{"site_config", "minimum_tls_version"},
 		version:       "1.2",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermWindowsWebAppMinimumTLSVersion) Name() string {
-	return "azurerm_windows_web_app_minimum_tls_version"
+func (r *AzurermWindowsFunctionAppMinimumTLSVersion) Name() string {
+	return "azurerm_windows_function_app_minimum_tls_version"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermWindowsWebAppMinimumTLSVersion) Enabled() bool {
+func (r *AzurermWindowsFunctionAppMinimumTLSVersion) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermWindowsWebAppMinimumTLSVersion) Severity() tflint.Severity {
+func (r *AzurermWindowsFunctionAppMinimumTLSVersion) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermWindowsWebAppMinimumTLSVersion) Link() string {
+func (r *AzurermWindowsFunctionAppMinimumTLSVersion) Link() string {
 	return ""
 }
 
 // Check verifies that minimum_tls_version is at least "1.2"
-func (r *AzurermWindowsWebAppMinimumTLSVersion) Check(runner tflint.Runner) error {
+func (r *AzurermWindowsFunctionAppMinimumTLSVersion) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Blocks: []hclext.BlockSchema{
 			{

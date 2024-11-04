@@ -5,44 +5,44 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermLinuxWebAppHttpsOnly checks that transparent data encryption is enabled
-type AzurermLinuxWebAppHttpsOnly struct {
+// AzurermLinuxWebAppHTTPSOnly checks that transparent data encryption is enabled
+type AzurermLinuxWebAppHTTPSOnly struct {
 	tflint.DefaultRule
 
 	resourceType  string
 	attributeName string
 }
 
-// NewAzurermLinuxWebAppHttpsOnly returns a new rule instance
-func NewAzurermLinuxWebAppHttpsOnly() *AzurermLinuxWebAppHttpsOnly {
-	return &AzurermLinuxWebAppHttpsOnly{
+// NewAzurermLinuxWebAppHTTPSOnly returns a new rule instance
+func NewAzurermLinuxWebAppHTTPSOnly() *AzurermLinuxWebAppHTTPSOnly {
+	return &AzurermLinuxWebAppHTTPSOnly{
 		resourceType:  "azurerm_linux_web_app",
 		attributeName: "https_only",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermLinuxWebAppHttpsOnly) Name() string {
+func (r *AzurermLinuxWebAppHTTPSOnly) Name() string {
 	return "azurerm_linux_web_app_https_only"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermLinuxWebAppHttpsOnly) Enabled() bool {
+func (r *AzurermLinuxWebAppHTTPSOnly) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermLinuxWebAppHttpsOnly) Severity() tflint.Severity {
+func (r *AzurermLinuxWebAppHTTPSOnly) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermLinuxWebAppHttpsOnly) Link() string {
+func (r *AzurermLinuxWebAppHTTPSOnly) Link() string {
 	return ""
 }
 
 // Check checks if transparent data encryption is enabled
-func (r *AzurermLinuxWebAppHttpsOnly) Check(runner tflint.Runner) error {
+func (r *AzurermLinuxWebAppHTTPSOnly) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

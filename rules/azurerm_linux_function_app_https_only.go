@@ -5,44 +5,44 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermWindowsWebAppHTTPSOnly checks that transparent data encryption is enabled
-type AzurermWindowsWebAppHTTPSOnly struct {
+// AzurermLinuxFunctionAppHTTPSOnly checks that transparent data encryption is enabled
+type AzurermLinuxFunctionAppHTTPSOnly struct {
 	tflint.DefaultRule
 
 	resourceType  string
 	attributeName string
 }
 
-// NewAzurermWindowsWebAppHTTPSOnly returns a new rule instance
-func NewAzurermWindowsWebAppHTTPSOnly() *AzurermWindowsWebAppHTTPSOnly {
-	return &AzurermWindowsWebAppHTTPSOnly{
-		resourceType:  "azurerm_windows_web_app",
+// NewAzurermLinuxFunctionAppHTTPSOnly returns a new rule instance
+func NewAzurermLinuxFunctionAppHTTPSOnly() *AzurermLinuxFunctionAppHTTPSOnly {
+	return &AzurermLinuxFunctionAppHTTPSOnly{
+		resourceType:  "azurerm_linux_function_app",
 		attributeName: "https_only",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermWindowsWebAppHTTPSOnly) Name() string {
-	return "azurerm_windows_web_app_https_only"
+func (r *AzurermLinuxFunctionAppHTTPSOnly) Name() string {
+	return "azurerm_linux_function_app_https_only"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermWindowsWebAppHTTPSOnly) Enabled() bool {
+func (r *AzurermLinuxFunctionAppHTTPSOnly) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermWindowsWebAppHTTPSOnly) Severity() tflint.Severity {
+func (r *AzurermLinuxFunctionAppHTTPSOnly) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermWindowsWebAppHTTPSOnly) Link() string {
+func (r *AzurermLinuxFunctionAppHTTPSOnly) Link() string {
 	return ""
 }
 
 // Check checks if transparent data encryption is enabled
-func (r *AzurermWindowsWebAppHTTPSOnly) Check(runner tflint.Runner) error {
+func (r *AzurermLinuxFunctionAppHTTPSOnly) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

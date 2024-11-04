@@ -9,7 +9,7 @@ import (
 )
 
 func TestRulesLength(t *testing.T) {
-	ruleSet := CreateRuleSet()
+	ruleSet := createRuleSet()
 	actualRules := len(ruleSet.Rules)
 
 	// Count .go files in rules directory that don't end with _test.go
