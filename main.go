@@ -15,6 +15,7 @@ func CreateRuleSet() *tflint.BuiltinRuleSet {
 			rules.NewAzurermLinuxWebAppFtpsState(),
 			rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
 			rules.NewAzurermMssqlDatabaseEncryption(),
+			rules.NewAzurermStorageAccountPublicNetworkAccessEnabled(),
 			rules.NewAzurermStorageAccountUnsecureTls(),
 			rules.NewAzurermWindowsWebAppFtpsState(),
 			rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
