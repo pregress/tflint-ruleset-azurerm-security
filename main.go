@@ -10,15 +10,21 @@ import (
 func CreateRuleSet() *tflint.BuiltinRuleSet {
 	return &tflint.BuiltinRuleSet{
 		Name:    "azurerm-security",
-		Version: "0.1.2",
+		Version: "0.1.3",
 		Rules: []tflint.Rule{
 			rules.NewAzurermKeyVaultPublicNetworkAccessEnabled(),
+			rules.NewAzurermLinuxFunctionAppFtpsState(),
+			rules.NewAzurermLinuxFunctionAppHttpsOnly(),
+			rules.NewAzurermLinuxFunctionAppMinimumTlsVersion(),
 			rules.NewAzurermLinuxWebAppFtpsState(),
 			rules.NewAzurermLinuxWebAppHttpsOnly(),
 			rules.NewAzurermLinuxWebAppMinimumTlsVersion(),
 			rules.NewAzurermMssqlDatabaseEncryption(),
 			rules.NewAzurermStorageAccountPublicNetworkAccessEnabled(),
 			rules.NewAzurermStorageAccountUnsecureTls(),
+			rules.NewAzurermWindowsFunctionAppFtpsState(),
+			rules.NewAzurermWindowsFunctionAppHttpsOnly(),
+			rules.NewAzurermWindowsFunctionAppMinimumTlsVersion(),
 			rules.NewAzurermWindowsWebAppFtpsState(),
 			rules.NewAzurermWindowsWebAppHttpsOnly(),
 			rules.NewAzurermWindowsWebAppMinimumTlsVersion(),
