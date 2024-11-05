@@ -35,7 +35,7 @@
 | --- | --- | --- | --- | --- |
 |azurerm_mssql_server_azuread_authentication_only |Only user Azure AD authentication to SQL |WARNING|✔||
 |azurerm_mssql_server_public_network_access_enabled|Consider disabling public network access on SQL servers. |NOTICE|✔||
-|azurerm_mssql_server_minimum_tls_version|Enforce TLS 1.2 on event hubs |WARNING|✔||
+|azurerm_mssql_server_minimum_tls_version|Enforce TLS 1.2 on SQL servers. |WARNING|✔||
 
 ## azurerm_mssql_firewall_rule
 
