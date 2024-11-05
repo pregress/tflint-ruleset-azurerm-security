@@ -12,6 +12,8 @@ func createRuleSet() *tflint.BuiltinRuleSet {
 		Name:    "azurerm-security",
 		Version: "0.1.3",
 		Rules: []tflint.Rule{
+			rules.NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
+			rules.NewAzurermEventhubNamespaceUnsecureTLS(),
 			rules.NewAzurermKeyVaultPublicNetworkAccessEnabled(),
 			rules.NewAzurermLinuxFunctionAppFtpsState(),
 			rules.NewAzurermLinuxFunctionAppHTTPSOnly(),

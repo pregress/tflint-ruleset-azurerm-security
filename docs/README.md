@@ -1,5 +1,11 @@
 # Rules
 
+## azurerm_eventhub_namespace
+|Name|Description|Severity|Enabled|Link|
+| --- | --- | --- | --- | --- |
+|azurerm_eventhub_namespace_public_network_access_enabled|Consider disabling public network access on eventhubs. |NOTICE|✔||
+|azurerm_eventhub_namespace_minimum_tls_version|Enforce TLS 1.2 on event hubs |WARNING|✔||
+
 ## azurerm_key_vault
 |Name|Description|Severity|Enabled|Link|
 | --- | --- | --- | --- | --- |
