@@ -30,6 +30,20 @@
 | --- | --- | --- | --- | --- |
 |azurerm_mssql_database_transparent_data_encryption_enabled|Enforce transparant data encryption|WARNING|✔||
 
+## azurerm_mssql_server
+|Name|Description|Severity|Enabled|Link|
+| --- | --- | --- | --- | --- |
+|azurerm_mssql_server_azuread_authentication_only |Only user Azure AD authentication to SQL |WARNING|✔||
+|azurerm_mssql_server_public_network_access_enabled|Consider disabling public network access on SQL servers. |NOTICE|✔||
+|azurerm_mssql_server_minimum_tls_version|Enforce TLS 1.2 on event hubs |WARNING|✔||
+
+## azurerm_mssql_firewall_rule
+
+|Name|Description|Severity|Enabled|Link|
+| --- | --- | --- | --- | --- |
+|azurerm_mssql_firewall_rule_all_allowed|Remove a firewall rule that allows the any ip.|ERROR|✔||
+
+
 ## azurerm_storage_account
 |Name|Description|Severity|Enabled|Link|
 | --- | --- | --- | --- | --- |
