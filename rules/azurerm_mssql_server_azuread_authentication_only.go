@@ -8,8 +8,8 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermMsSqlServerAdAuthOnly checks that azuread_authentication_only is set to true
-type AzurermMsSqlServerAdAuthOnly struct {
+// AzurermMsSQLServerAdAuthOnly checks that azuread_authentication_only is set to true
+type AzurermMsSQLServerAdAuthOnly struct {
 	tflint.DefaultRule
 
 	resourceType  string
@@ -17,9 +17,9 @@ type AzurermMsSqlServerAdAuthOnly struct {
 	expectedValue string
 }
 
-// NewAzurermMsSqlServerAdAuthOnly returns a new rule instance
-func NewAzurermMsSqlServerAdAuthOnly() *AzurermMsSqlServerAdAuthOnly {
-	return &AzurermMsSqlServerAdAuthOnly{
+// NewAzurermMsSQLServerAdAuthOnly returns a new rule instance
+func NewAzurermMsSQLServerAdAuthOnly() *AzurermMsSQLServerAdAuthOnly {
+	return &AzurermMsSQLServerAdAuthOnly{
 		resourceType:  "azurerm_mssql_server",
 		attributePath: []string{"azuread_administrator", "azuread_authentication_only"},
 		expectedValue: "true",
@@ -27,27 +27,27 @@ func NewAzurermMsSqlServerAdAuthOnly() *AzurermMsSqlServerAdAuthOnly {
 }
 
 // Name returns the rule name
-func (r *AzurermMsSqlServerAdAuthOnly) Name() string {
+func (r *AzurermMsSQLServerAdAuthOnly) Name() string {
 	return "azurerm_mssql_server_azuread_authentication_only"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermMsSqlServerAdAuthOnly) Enabled() bool {
+func (r *AzurermMsSQLServerAdAuthOnly) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermMsSqlServerAdAuthOnly) Severity() tflint.Severity {
+func (r *AzurermMsSQLServerAdAuthOnly) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermMsSqlServerAdAuthOnly) Link() string {
+func (r *AzurermMsSQLServerAdAuthOnly) Link() string {
 	return ""
 }
 
 // Check verifies that azuread_authentication_only is set to "Disabled"
-func (r *AzurermMsSqlServerAdAuthOnly) Check(runner tflint.Runner) error {
+func (r *AzurermMsSQLServerAdAuthOnly) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Blocks: []hclext.BlockSchema{
 			{

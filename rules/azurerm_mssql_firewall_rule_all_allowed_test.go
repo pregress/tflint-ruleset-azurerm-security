@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermMsSqlFirewallRuleAllAllowed(t *testing.T) {
+func Test_AzurermMsSQLFirewallRuleAllAllowed(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -22,7 +22,7 @@ resource "azurerm_mssql_firewall_rule" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlFirewallRuleAllAllowed(),
+					Rule:    NewAzurermMsSQLFirewallRuleAllAllowed(),
 					Message: "Firewall rule allows access from all IP addresses (0.0.0.0-255.255.255.255). Consider restricting the IP range for better security.",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -50,7 +50,7 @@ resource "azurerm_mssql_firewall_rule" "example" {
 		},
 	}
 
-	rule := NewAzurermMsSqlFirewallRuleAllAllowed()
+	rule := NewAzurermMsSQLFirewallRuleAllAllowed()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

@@ -5,8 +5,8 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermMsSqlFirewallRuleAllAllowed checks if the firewall rule allows all IP addresses
-type AzurermMsSqlFirewallRuleAllAllowed struct {
+// AzurermMsSQLFirewallRuleAllAllowed checks if the firewall rule allows all IP addresses
+type AzurermMsSQLFirewallRuleAllAllowed struct {
 	tflint.DefaultRule
 
 	resourceType string
@@ -14,9 +14,9 @@ type AzurermMsSqlFirewallRuleAllAllowed struct {
 	endIPAttr    string
 }
 
-// NewAzurermMsSqlFirewallRuleAllAllowed returns a new rule instance
-func NewAzurermMsSqlFirewallRuleAllAllowed() *AzurermMsSqlFirewallRuleAllAllowed {
-	return &AzurermMsSqlFirewallRuleAllAllowed{
+// NewAzurermMsSQLFirewallRuleAllAllowed returns a new rule instance
+func NewAzurermMsSQLFirewallRuleAllAllowed() *AzurermMsSQLFirewallRuleAllAllowed {
+	return &AzurermMsSQLFirewallRuleAllAllowed{
 		resourceType: "azurerm_mssql_firewall_rule",
 		startIPAttr:  "start_ip_address",
 		endIPAttr:    "end_ip_address",
@@ -24,27 +24,27 @@ func NewAzurermMsSqlFirewallRuleAllAllowed() *AzurermMsSqlFirewallRuleAllAllowed
 }
 
 // Name returns the rule name
-func (r *AzurermMsSqlFirewallRuleAllAllowed) Name() string {
+func (r *AzurermMsSQLFirewallRuleAllAllowed) Name() string {
 	return "azurerm_mssql_firewall_rule_all_allowed"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermMsSqlFirewallRuleAllAllowed) Enabled() bool {
+func (r *AzurermMsSQLFirewallRuleAllAllowed) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermMsSqlFirewallRuleAllAllowed) Severity() tflint.Severity {
+func (r *AzurermMsSQLFirewallRuleAllAllowed) Severity() tflint.Severity {
 	return tflint.ERROR
 }
 
 // Link returns the rule reference link
-func (r *AzurermMsSqlFirewallRuleAllAllowed) Link() string {
+func (r *AzurermMsSQLFirewallRuleAllAllowed) Link() string {
 	return ""
 }
 
 // Check checks if the firewall rule allows all IP addresses
-func (r *AzurermMsSqlFirewallRuleAllAllowed) Check(runner tflint.Runner) error {
+func (r *AzurermMsSQLFirewallRuleAllAllowed) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.startIPAttr},

@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermMsSqlServerAdAuthOnly(t *testing.T) {
+func Test_AzurermMsSQLServerAdAuthOnly(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -23,7 +23,7 @@ resource "azurerm_mssql_server" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlServerAdAuthOnly(),
+					Rule:    NewAzurermMsSQLServerAdAuthOnly(),
 					Message: "azuread_authentication_only is set to false, should be set to true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -58,7 +58,7 @@ resource "azurerm_mssql_server" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlServerAdAuthOnly(),
+					Rule:    NewAzurermMsSQLServerAdAuthOnly(),
 					Message: "azuread_authentication_only is missing in azuread_administrator, should be set to true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -81,7 +81,7 @@ resource "azurerm_mssql_server" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlServerAdAuthOnly(),
+					Rule:    NewAzurermMsSQLServerAdAuthOnly(),
 					Message: "azuread_administrator block is missing, azuread_authentication_only should be set to true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -99,7 +99,7 @@ resource "azurerm_mssql_server" "example" {
 		},
 	}
 
-	rule := NewAzurermMsSqlServerAdAuthOnly()
+	rule := NewAzurermMsSQLServerAdAuthOnly()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

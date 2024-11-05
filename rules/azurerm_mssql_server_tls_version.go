@@ -8,8 +8,8 @@ import (
 	// "github.com/terraform-linters/tflint-ruleset-azurerm/project"
 )
 
-// AzurermMsSqlServerUnsecureTLS checks the pattern is valid
-type AzurermMsSqlServerUnsecureTLS struct {
+// AzurermMsSQLServerUnsecureTLS checks the pattern is valid
+type AzurermMsSQLServerUnsecureTLS struct {
 	tflint.DefaultRule
 
 	resourceType  string
@@ -17,9 +17,9 @@ type AzurermMsSqlServerUnsecureTLS struct {
 	enum          []string
 }
 
-// NewAzurermMsSqlServerUnsecureTLS returns new rule with default attributes
-func NewAzurermMsSqlServerUnsecureTLS() *AzurermMsSqlServerUnsecureTLS {
-	return &AzurermMsSqlServerUnsecureTLS{
+// NewAzurermMsSQLServerUnsecureTLS returns new rule with default attributes
+func NewAzurermMsSQLServerUnsecureTLS() *AzurermMsSQLServerUnsecureTLS {
+	return &AzurermMsSQLServerUnsecureTLS{
 		resourceType:  "azurerm_mssql_server",
 		attributeName: "min_tls_version",
 		enum: []string{
@@ -30,27 +30,27 @@ func NewAzurermMsSqlServerUnsecureTLS() *AzurermMsSqlServerUnsecureTLS {
 }
 
 // Name returns the rule name
-func (r *AzurermMsSqlServerUnsecureTLS) Name() string {
+func (r *AzurermMsSQLServerUnsecureTLS) Name() string {
 	return "azurerm_mssql_server_unsecure_tls"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermMsSqlServerUnsecureTLS) Enabled() bool {
+func (r *AzurermMsSQLServerUnsecureTLS) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermMsSqlServerUnsecureTLS) Severity() tflint.Severity {
+func (r *AzurermMsSQLServerUnsecureTLS) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermMsSqlServerUnsecureTLS) Link() string {
+func (r *AzurermMsSQLServerUnsecureTLS) Link() string {
 	return ""
 }
 
 // Check checks the pattern is valid
-func (r *AzurermMsSqlServerUnsecureTLS) Check(runner tflint.Runner) error {
+func (r *AzurermMsSQLServerUnsecureTLS) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

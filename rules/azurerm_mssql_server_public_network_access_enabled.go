@@ -5,44 +5,44 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermMsSqlServerPublicNetworkAccessEnabled checks that transparent data encryption is enabled
-type AzurermMsSqlServerPublicNetworkAccessEnabled struct {
+// AzurermMsSQLServerPublicNetworkAccessEnabled checks that transparent data encryption is enabled
+type AzurermMsSQLServerPublicNetworkAccessEnabled struct {
 	tflint.DefaultRule
 
 	resourceType  string
 	attributeName string
 }
 
-// NewAzurermMsSqlServerPublicNetworkAccessEnabled returns a new rule instance
-func NewAzurermMsSqlServerPublicNetworkAccessEnabled() *AzurermMsSqlServerPublicNetworkAccessEnabled {
-	return &AzurermMsSqlServerPublicNetworkAccessEnabled{
+// NewAzurermMsSQLServerPublicNetworkAccessEnabled returns a new rule instance
+func NewAzurermMsSQLServerPublicNetworkAccessEnabled() *AzurermMsSQLServerPublicNetworkAccessEnabled {
+	return &AzurermMsSQLServerPublicNetworkAccessEnabled{
 		resourceType:  "azurerm_mssql_server",
 		attributeName: "public_network_access_enabled",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermMsSqlServerPublicNetworkAccessEnabled) Name() string {
+func (r *AzurermMsSQLServerPublicNetworkAccessEnabled) Name() string {
 	return "azurerm_mssql_server_public_network_access_enabled"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermMsSqlServerPublicNetworkAccessEnabled) Enabled() bool {
+func (r *AzurermMsSQLServerPublicNetworkAccessEnabled) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermMsSqlServerPublicNetworkAccessEnabled) Severity() tflint.Severity {
+func (r *AzurermMsSQLServerPublicNetworkAccessEnabled) Severity() tflint.Severity {
 	return tflint.NOTICE
 }
 
 // Link returns the rule reference link
-func (r *AzurermMsSqlServerPublicNetworkAccessEnabled) Link() string {
+func (r *AzurermMsSQLServerPublicNetworkAccessEnabled) Link() string {
 	return ""
 }
 
 // Check checks if transparent data encryption is enabled
-func (r *AzurermMsSqlServerPublicNetworkAccessEnabled) Check(runner tflint.Runner) error {
+func (r *AzurermMsSQLServerPublicNetworkAccessEnabled) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},

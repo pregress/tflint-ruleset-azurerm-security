@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermMsSqlServerUnsecureTLS(t *testing.T) {
+func Test_AzurermMsSQLServerUnsecureTLS(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -21,7 +21,7 @@ resource "azurerm_mssql_server" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlServerUnsecureTLS(),
+					Rule:    NewAzurermMsSQLServerUnsecureTLS(),
 					Message: `"TLS1_0" is an insecure value as min_tls_version`,
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -41,7 +41,7 @@ resource "azurerm_mssql_server" "example" {
 		},
 	}
 
-	rule := NewAzurermMsSqlServerUnsecureTLS()
+	rule := NewAzurermMsSQLServerUnsecureTLS()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {

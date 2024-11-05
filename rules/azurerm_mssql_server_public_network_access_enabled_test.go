@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermMsSqlServerPublicNetworkAccessEnabled(t *testing.T) {
+func Test_AzurermMsSQLServerPublicNetworkAccessEnabled(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -21,7 +21,7 @@ resource "azurerm_mssql_server" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlServerPublicNetworkAccessEnabled(),
+					Rule:    NewAzurermMsSQLServerPublicNetworkAccessEnabled(),
 					Message: "Consider changing public_network_access_enabled to false",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -38,7 +38,7 @@ resource "azurerm_mssql_server" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermMsSqlServerPublicNetworkAccessEnabled(),
+					Rule:    NewAzurermMsSQLServerPublicNetworkAccessEnabled(),
 					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -58,7 +58,7 @@ resource "azurerm_mssql_server" "example" {
 		},
 	}
 
-	rule := NewAzurermMsSqlServerPublicNetworkAccessEnabled()
+	rule := NewAzurermMsSQLServerPublicNetworkAccessEnabled()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {
