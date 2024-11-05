@@ -41,7 +41,7 @@
 
 |Name|Description|Severity|Enabled|Link|
 | --- | --- | --- | --- | --- |
-|azurerm_mssql_firewall_rule_all_allowed|Remove a firewall rule that allows the any ip.|ERROR|✔||
+|azurerm_mssql_firewall_rule_all_allowed|Remove a firewall rule that allows any ip.|ERROR|✔||
 
 
 ## azurerm_storage_account
