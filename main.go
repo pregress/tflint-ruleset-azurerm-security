@@ -10,7 +10,7 @@ import (
 func createRuleSet() *tflint.BuiltinRuleSet {
 	return &tflint.BuiltinRuleSet{
 		Name:    "azurerm-security",
-		Version: "0.1.3",
+		Version: "0.1.4",
 		Rules: []tflint.Rule{
 			rules.NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
 			rules.NewAzurermEventhubNamespaceUnsecureTLS(),
