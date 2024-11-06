@@ -2,3 +2,9 @@
 /tflint-ruleset-azurerm-security
 
 tools/
+
+
+# test coverage
+cover.html
+cover.out
+coverage.txt

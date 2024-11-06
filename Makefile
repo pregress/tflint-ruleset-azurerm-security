@@ -1,7 +1,7 @@
 default: build
 
 test:
-	go test ./...
+	go test ./... -cover -coverprofile=coverage.txt
 
 build:
 	go build
