@@ -31,6 +31,7 @@ jobs:
 
     - name: Archive code coverage results
       uses: actions/upload-artifact@v4
+      if: matrix.os == 'ubuntu-latest'
       with:
         name: code-coverage
         path: coverage.txt
