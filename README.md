@@ -1,5 +1,6 @@
 # TFLint Ruleset AzureRm Security
 [![build](https://github.com/pregress/tflint-ruleset-azurerm-securirty/actions/workflows/build.yml/badge.svg)](https://github.com/pregress/tflint-ruleset-azurerm-securirty/actions/workflows/build.yml)
+[![codecov](https://codecov.io/github/pregress/tflint-ruleset-azurerm-security/graph/badge.svg?token=J3ZJ051YQQ)](https://codecov.io/github/pregress/tflint-ruleset-azurerm-security)
 
 This is a  repository for an azurerm tflint rule set to enforce security best practices.
 
