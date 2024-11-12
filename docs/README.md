@@ -9,7 +9,8 @@
 ## azurerm_key_vault
 |Name|Description|Severity|Enabled|Link|
 | --- | --- | --- | --- | --- |
-|azurerm_key_vault_public_network_access_enabled|Consider disabling public network access on keyvaults. |NOTICE|✔||
+|azurerm_key_vault_public_network_access_enabled|Consider disabling public network access on keyvaults. |NOTICE|||
+|azurerm_key_vault_network_acls_default_deny|Deny network access to Keyvaults. You can add `bypass = "AzureServices"` to allow azure services to connect to keyvault or add `ip_rules`|WARNING|✔||
 
 ## azurerm_linux_function_app
 |Name|Description|Severity|Enabled|Link|
