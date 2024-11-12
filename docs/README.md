@@ -53,6 +53,7 @@
 ## azurerm_storage_account
 |Name|Description|Severity|Enabled|Link|
 | --- | --- | --- | --- | --- |
+|azurerm_storage_account_https_traffic_only_enabled|Enforce all traffic to use https on storage accounts|WARNING|✔||
 |azurerm_storage_account_public_network_access_enabled|Consider disabling public network access on storage accounts. |NOTICE|✔||
 |azurerm_storage_account_tls_version|Enforce TLS 1.2 on storage accounts |WARNING|✔||
 
