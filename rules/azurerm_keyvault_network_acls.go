@@ -5,44 +5,44 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
-// AzurermKeyVaultNetworkAclsDefaultDeny checks that network_acls default_action is set to "Deny"
-type AzurermKeyVaultNetworkAclsDefaultDeny struct {
+// AzurermKeyVaultNetworkACLsDefaultDeny checks that network_acls default_action is set to "Deny"
+type AzurermKeyVaultNetworkACLsDefaultDeny struct {
 	tflint.DefaultRule
 
 	resourceType string
 	blockName    string
 }
 
-// NewAzurermKeyVaultNetworkAclsDefaultDeny returns a new rule instance
-func NewAzurermKeyVaultNetworkAclsDefaultDeny() *AzurermKeyVaultNetworkAclsDefaultDeny {
-	return &AzurermKeyVaultNetworkAclsDefaultDeny{
+// NewAzurermKeyVaultNetworkACLsDefaultDeny returns a new rule instance
+func NewAzurermKeyVaultNetworkACLsDefaultDeny() *AzurermKeyVaultNetworkACLsDefaultDeny {
+	return &AzurermKeyVaultNetworkACLsDefaultDeny{
 		resourceType: "azurerm_key_vault",
 		blockName:    "network_acls",
 	}
 }
 
 // Name returns the rule name
-func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Name() string {
+func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Name() string {
 	return "azurerm_key_vault_network_acls_default_deny"
 }
 
 // Enabled returns whether the rule is enabled by default
-func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Enabled() bool {
+func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Enabled() bool {
 	return true
 }
 
 // Severity returns the rule severity
-func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Severity() tflint.Severity {
+func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Severity() tflint.Severity {
 	return tflint.WARNING
 }
 
 // Link returns the rule reference link
-func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Link() string {
+func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Link() string {
 	return ""
 }
 
 // Check checks if network_acls default_action is set to "Deny"
-func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Check(runner tflint.Runner) error {
+func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Blocks: []hclext.BlockSchema{
 			{
@@ -60,9 +60,9 @@ func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Check(runner tflint.Runner) erro
 	}
 
 	for _, resource := range resources.Blocks {
-		networkAcls := resource.Body.Blocks
+		networkACLs := resource.Body.Blocks
 
-		if len(networkAcls) == 0 {
+		if len(networkACLs) == 0 {
 			runner.EmitIssue(
 				r,
 				"network_acls block is not defined, consider adding it with default_action = \"Deny\"",
@@ -71,17 +71,17 @@ func (r *AzurermKeyVaultNetworkAclsDefaultDeny) Check(runner tflint.Runner) erro
 			continue
 		}
 
-		for _, networkAcl := range networkAcls {
-			if networkAcl.Type != r.blockName {
+		for _, networkACL := range networkACLs {
+			if networkACL.Type != r.blockName {
 				continue
 			}
 
-			attribute, exists := networkAcl.Body.Attributes["default_action"]
+			attribute, exists := networkACL.Body.Attributes["default_action"]
 			if !exists {
 				runner.EmitIssue(
 					r,
 					"default_action is not defined in network_acls block",
-					networkAcl.DefRange,
+					networkACL.DefRange,
 				)
 				continue
 			}

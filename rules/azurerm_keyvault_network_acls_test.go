@@ -7,7 +7,7 @@ import (
 	"github.com/terraform-linters/tflint-plugin-sdk/helper"
 )
 
-func Test_AzurermKeyVaultNetworkAclsDefaultDeny(t *testing.T) {
+func Test_AzurermKeyVaultNetworkACLsDefaultDeny(t *testing.T) {
 	tests := []struct {
 		Name     string
 		Content  string
@@ -20,7 +20,7 @@ resource "azurerm_key_vault" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermKeyVaultNetworkAclsDefaultDeny(),
+					Rule:    NewAzurermKeyVaultNetworkACLsDefaultDeny(),
 					Message: "network_acls block is not defined, consider adding it with default_action = \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -39,7 +39,7 @@ resource "azurerm_key_vault" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermKeyVaultNetworkAclsDefaultDeny(),
+					Rule:    NewAzurermKeyVaultNetworkACLsDefaultDeny(),
 					Message: "default_action is not defined in network_acls block",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -59,7 +59,7 @@ resource "azurerm_key_vault" "example" {
 }`,
 			Expected: helper.Issues{
 				{
-					Rule:    NewAzurermKeyVaultNetworkAclsDefaultDeny(),
+					Rule:    NewAzurermKeyVaultNetworkACLsDefaultDeny(),
 					Message: "network_acls default_action should be set to \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
@@ -81,7 +81,7 @@ resource "azurerm_key_vault" "example" {
 		},
 	}
 
-	rule := NewAzurermKeyVaultNetworkAclsDefaultDeny()
+	rule := NewAzurermKeyVaultNetworkACLsDefaultDeny()
 
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {
