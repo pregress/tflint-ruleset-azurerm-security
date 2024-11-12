@@ -6,6 +6,11 @@
 |azurerm_eventhub_namespace_public_network_access_enabled|Consider disabling public network access on eventhubs. |NOTICE|✔||
 |azurerm_eventhub_namespace_minimum_tls_version|Enforce TLS 1.2 on event hubs |WARNING|✔||
 
+## azurerm_iothub_endpoint_eventhub
+|Name|Description|Severity|Enabled|Link|
+| --- | --- | --- | --- | --- |
+|azurerm_iothub_endpoint_eventhub_authentication_type|Consider using managed identity to authenticate agains eventhub. |NOTICE|||
+
 ## azurerm_key_vault
 |Name|Description|Severity|Enabled|Link|
 | --- | --- | --- | --- | --- |
