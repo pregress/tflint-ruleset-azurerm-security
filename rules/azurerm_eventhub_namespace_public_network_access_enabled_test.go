@@ -14,7 +14,7 @@ func Test_AzurermEventhubNamespacePublicNetworkAccessEnabled(t *testing.T) {
 		Expected helper.Issues
 	}{
 		{
-			Name: "public network access disabled",
+			Name: "public network access enabled",
 			Content: `
 resource "azurerm_eventhub_namespace" "example" {
     public_network_access_enabled = true
@@ -22,24 +22,7 @@ resource "azurerm_eventhub_namespace" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
-					Message: "Consider changing public_network_access_enabled to false",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start:    hcl.Pos{Line: 3, Column: 37},
-						End:      hcl.Pos{Line: 3, Column: 41},
-					},
-				},
-			},
-		},
-		{
-			Name: "public network access missing",
-			Content: `
-resource "azurerm_eventhub_namespace" "example" {
-}`,
-			Expected: helper.Issues{
-				{
-					Rule:    NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
-					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it",
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_rulesets block with default_action = Deny",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 2, Column: 1},
@@ -49,10 +32,78 @@ resource "azurerm_eventhub_namespace" "example" {
 			},
 		},
 		{
+			Name: "public network access missing and network_rulesets missing",
+			Content: `
+resource "azurerm_eventhub_namespace" "example" {
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_rulesets block with default_action = Deny",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 2, Column: 1},
+						End:      hcl.Pos{Line: 2, Column: 48},
+					},
+				},
+			},
+		},
+		{
+			Name: "public network access missing and network_rulesets empty",
+			Content: `
+resource "azurerm_eventhub_namespace" "example" {
+    network_rulesets {
+	}
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_rulesets block with default_action = Deny",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 2, Column: 1},
+						End:      hcl.Pos{Line: 2, Column: 48},
+					},
+				},
+			},
+		},
+		{
+			Name: "public network access enabled and network_rulesets default action allow",
+			Content: `
+resource "azurerm_eventhub_namespace" "example" {
+    public_network_access_enabled = true
+	network_rulesets {
+	    default_action = "Allow"
+	}
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
+					Message: "public_network_access_enabled is true and network_rulesets block with default_action = Allow, Consider changing the default_action to deny",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 5, Column: 23},
+						End:      hcl.Pos{Line: 5, Column: 30},
+					},
+				},
+			},
+		},
+		{
 			Name: "public network access disabled",
 			Content: `
 resource "azurerm_eventhub_namespace" "example" {
     public_network_access_enabled = false
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "public network access enabled and network_rulesets default action deny",
+			Content: `
+resource "azurerm_eventhub_namespace" "example" {
+    public_network_access_enabled = true
+	network_rulesets {
+	    default_action = "Deny"
+	}
 }`,
 			Expected: helper.Issues{},
 		},
