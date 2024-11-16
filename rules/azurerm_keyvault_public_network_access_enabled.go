@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermKeyVaultPublicNetworkAccessEnabled checks that transparent data encryption is enabled
@@ -38,7 +40,7 @@ func (r *AzurermKeyVaultPublicNetworkAccessEnabled) Severity() tflint.Severity {
 
 // Link returns the rule reference link
 func (r *AzurermKeyVaultPublicNetworkAccessEnabled) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if transparent data encryption is enabled

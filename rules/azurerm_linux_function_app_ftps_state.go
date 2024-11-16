@@ -6,6 +6,8 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermLinuxFunctionAppFtpsState checks that ftps_state is set to "Disabled"
@@ -43,7 +45,7 @@ func (r *AzurermLinuxFunctionAppFtpsState) Severity() tflint.Severity {
 
 // Link returns the rule reference link
 func (r *AzurermLinuxFunctionAppFtpsState) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check verifies that ftps_state is set to "Disabled"

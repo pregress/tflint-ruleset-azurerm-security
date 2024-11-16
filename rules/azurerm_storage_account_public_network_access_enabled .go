@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermStorageAccountPublicNetworkAccessEnabled checks that transparent data encryption is enabled
@@ -38,7 +40,7 @@ func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Severity() tflint.Seve
 
 // Link returns the rule reference link
 func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if transparent data encryption is enabled

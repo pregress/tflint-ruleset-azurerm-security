@@ -5,7 +5,8 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	// "github.com/terraform-linters/tflint-ruleset-azurerm/project"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermEventhubNamespaceUnsecureTLS checks the pattern is valid
@@ -45,8 +46,8 @@ func (r *AzurermEventhubNamespaceUnsecureTLS) Severity() tflint.Severity {
 }
 
 // Link returns the rule reference link
-func (r *AzurermEventhubNamespaceUnsecureTLS) Link() string {
-	return ""
+func (r *AzurermEventhubNamespaceUnsecureTLS) Link() string {	
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks the pattern is valid

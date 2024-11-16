@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermKeyVaultNetworkACLsDefaultDeny checks that network_acls default_action is set to "Deny"
@@ -37,8 +39,8 @@ func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Severity() tflint.Severity {
 }
 
 // Link returns the rule reference link
-func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Link() string {
-	return ""
+func (r *AzurermKeyVaultNetworkACLsDefaultDeny) Link() string {	
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if network_acls default_action is set to "Deny"

@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermIoTHubEndpointEventHubAuthenticationType checks that the authentication_type for azurerm_iothub_endpoint_eventhub is "identityBased"
@@ -37,8 +39,8 @@ func (r *AzurermIoTHubEndpointEventHubAuthenticationType) Severity() tflint.Seve
 }
 
 // Link returns the rule reference link
-func (r *AzurermIoTHubEndpointEventHubAuthenticationType) Link() string {
-	return ""
+func (r *AzurermIoTHubEndpointEventHubAuthenticationType) Link() string {	
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if the authentication_type for azurerm_iothub_endpoint_eventhub is "identityBased"

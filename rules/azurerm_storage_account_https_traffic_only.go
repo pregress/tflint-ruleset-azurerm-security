@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermStorageAccountHTTPSTrafficOnlyEnabled checks that https_traffic_only is enabled for azurerm_storage_account
@@ -38,7 +40,7 @@ func (r *AzurermStorageAccountHTTPSTrafficOnlyEnabled) Severity() tflint.Severit
 
 // Link returns the rule reference link
 func (r *AzurermStorageAccountHTTPSTrafficOnlyEnabled) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if https_traffic_only is enabled for azurerm_storage_account

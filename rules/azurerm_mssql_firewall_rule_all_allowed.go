@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermMsSQLFirewallRuleAllAllowed checks if the firewall rule allows all IP addresses
@@ -40,7 +42,7 @@ func (r *AzurermMsSQLFirewallRuleAllAllowed) Severity() tflint.Severity {
 
 // Link returns the rule reference link
 func (r *AzurermMsSQLFirewallRuleAllAllowed) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if the firewall rule allows all IP addresses
