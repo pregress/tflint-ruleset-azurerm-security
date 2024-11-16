@@ -3,11 +3,15 @@ package main
 
 import (
 	"bytes"
+	"fmt"
 	"os"
 	"path/filepath"
 	"reflect"
+	"sort"
 	"strings"
 	"testing"
+
+	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 )
 
 func TestRulesLength(t *testing.T) {
@@ -145,6 +149,139 @@ func TestRuleDocumentation(t *testing.T) {
 			if fileInfo.Size() == 0 {
 				t.Errorf("Documentation file for rule %s exists but is empty", ruleName)
 			}
+		}
+	}
+}
+
+// main_test.go
+
+func TestRulesReadme(t *testing.T) {
+	ruleSet := createRuleSet()
+	readmePath := "./docs/README.md"
+
+	// Create rules map grouped by resource type
+	rulesByType := make(map[string][]tflint.Rule)
+	var allRules []tflint.Rule
+
+	// Group rules by resource type and collect all rules for the table
+	for _, rule := range ruleSet.Rules {
+		ruleValue := reflect.ValueOf(rule)
+		resourceTypeField := ruleValue.Elem().FieldByName("resourceType")
+		
+		if !resourceTypeField.IsValid() {
+			t.Errorf("Rule %s does not have a resourceType field", rule.Name())
+			continue
+		}
+		
+		resourceType := resourceTypeField.String()
+		rulesByType[resourceType] = append(rulesByType[resourceType], rule)
+		allRules = append(allRules, rule)
+	}
+
+	// Sort all rules by name for the table
+	sort.Slice(allRules, func(i, j int) bool {
+		return allRules[i].Name() < allRules[j].Name()
+	})
+
+	// Sort resource types
+	var resourceTypes []string
+	for resourceType := range rulesByType {
+		resourceTypes = append(resourceTypes, resourceType)
+	}
+	sort.Strings(resourceTypes)
+
+	// Read existing README content
+	var existingContent string
+	existingContentBytes, err := os.ReadFile(readmePath)
+	if err == nil {
+		existingContent = string(existingContentBytes)
+	}
+
+	// Generate new content
+	var content strings.Builder
+	content.WriteString("# Rules\n\n")
+
+	// Create rules table
+	content.WriteString("## Rules Index\n\n")
+	content.WriteString("|Name|Severity|Enabled|\n")
+	content.WriteString("| --- | --- | --- |\n")
+
+	// Generate table entries
+	for _, rule := range allRules {
+		enabled := ""
+		if rule.Enabled() {
+			enabled = "✔"
+		}
+		content.WriteString(fmt.Sprintf("|[%s](./rules/%s.md)|%s|%s|\n",
+			rule.Name(),
+			rule.Name(),
+			rule.Severity().String(),
+			enabled))
+	}
+	content.WriteString("\n")
+
+	// Add resource type sections
+	content.WriteString("## Rules by Resource\n\n")
+	for _, resourceType := range resourceTypes {
+		content.WriteString(fmt.Sprintf("### %s\n\n", resourceType))
+		rules := rulesByType[resourceType]
+		
+		// Sort rules within each resource type
+		sort.Slice(rules, func(i, j int) bool {
+			return rules[i].Name() < rules[j].Name()
+		})
+
+		for _, rule := range rules {
+			content.WriteString(fmt.Sprintf("- [%s](./rules/%s.md)\n", rule.Name(), rule.Name()))
+		}
+		content.WriteString("\n")
+	}
+
+	// Check if content needs to be updated
+	if existingContent != content.String() {
+		err := os.WriteFile(readmePath, []byte(content.String()), 0644)
+		if err != nil {
+			t.Fatalf("Failed to write README.md: %v", err)
+		}
+		t.Log("Updated rules/README.md with new content")
+	}
+
+	// Verify the content structure
+	currentContent, err := os.ReadFile(readmePath)
+	if err != nil {
+		t.Fatalf("Failed to read README.md for verification: %v", err)
+	}
+
+	// Verify required sections exist
+	requiredSections := []string{
+		"# Rules",
+		"## Rules Index",
+		"## Rules by Resource",
+	}
+
+	for _, section := range requiredSections {
+		if !strings.Contains(string(currentContent), section) {
+			t.Errorf("README.md is missing required section: %s", section)
+		}
+	}
+
+	// Verify table structure
+	if !strings.Contains(string(currentContent), "|Name|Severity|Enabled|") {
+		t.Error("README.md is missing required table header")
+	}
+
+	// Verify all rules are included
+	for _, rule := range allRules {
+		ruleName := rule.Name()
+		if !strings.Contains(string(currentContent), fmt.Sprintf("[%s](./rules/%s.md)", ruleName, ruleName)) {
+			t.Errorf("README.md is missing rule: %s", ruleName)
+		}
+	}
+
+	// Verify resource type sections
+	for _, resourceType := range resourceTypes {
+		if !strings.Contains(string(currentContent), fmt.Sprintf("### %s", resourceType)) {
+			t.Errorf("README.md is missing resource type section: %s", resourceType)
 		}
 	}
 }
