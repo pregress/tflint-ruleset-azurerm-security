@@ -1,73 +1,92 @@
 # Rules
 
-## azurerm_eventhub_namespace
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_eventhub_namespace_public_network_access_enabled](./rules/azurerm_eventhub_namespace_public_network_access_enabled.md)|Consider disabling public network access on eventhubs. |NOTICE|✔|
-|[azurerm_eventhub_namespace_minimum_tls_version](./rules/azurerm_eventhub_namespace_unsecure_tls.md)|Enforce TLS 1.2 on event hubs |WARNING|✔|
+## Rules Index
 
-## azurerm_iothub_endpoint_eventhub
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_iothub_endpoint_eventhub_authentication_type](./rules/azurerm_iothub_endpoint_eventhub_authentication_type.md)|Consider using managed identity to authenticate agains eventhub. |NOTICE||
+|Name|Severity|Enabled|
+| --- | --- | --- |
+|[azurerm_eventhub_namespace_public_network_access_enabled](./rules/azurerm_eventhub_namespace_public_network_access_enabled.md)|Notice|✔|
+|[azurerm_eventhub_namespace_unsecure_tls](./rules/azurerm_eventhub_namespace_unsecure_tls.md)|Warning|✔|
+|[azurerm_iothub_endpoint_eventhub_authentication_type](./rules/azurerm_iothub_endpoint_eventhub_authentication_type.md)|Notice|✔|
+|[azurerm_key_vault_network_acls_default_deny](./rules/azurerm_key_vault_network_acls_default_deny.md)|Warning|✔|
+|[azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)|Notice||
+|[azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)|Warning|✔|
+|[azurerm_linux_function_app_https_only](./rules/azurerm_linux_function_app_https_only.md)|Warning|✔|
+|[azurerm_linux_function_app_minimum_tls_version](./rules/azurerm_linux_function_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_linux_web_app_ftps_state](./rules/azurerm_linux_web_app_ftps_state.md)|Warning|✔|
+|[azurerm_linux_web_app_https_only](./rules/azurerm_linux_web_app_https_only.md)|Warning|✔|
+|[azurerm_linux_web_app_minimum_tls_version](./rules/azurerm_linux_web_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_mssql_database_encryption](./rules/azurerm_mssql_database_encryption.md)|Warning|✔|
+|[azurerm_mssql_firewall_rule_all_allowed](./rules/azurerm_mssql_firewall_rule_all_allowed.md)|Error|✔|
+|[azurerm_mssql_server_azuread_authentication_only](./rules/azurerm_mssql_server_azuread_authentication_only.md)|Warning|✔|
+|[azurerm_mssql_server_public_network_access_enabled](./rules/azurerm_mssql_server_public_network_access_enabled.md)|Notice|✔|
+|[azurerm_mssql_server_unsecure_tls](./rules/azurerm_mssql_server_unsecure_tls.md)|Warning|✔|
+|[azurerm_storage_account_https_traffic_only_enabled](./rules/azurerm_storage_account_https_traffic_only_enabled.md)|Warning|✔|
+|[azurerm_storage_account_public_network_access_enabled](./rules/azurerm_storage_account_public_network_access_enabled.md)|Notice|✔|
+|[azurerm_storage_account_unsecure_tls](./rules/azurerm_storage_account_unsecure_tls.md)|Warning|✔|
+|[azurerm_windows_function_app_ftps_state](./rules/azurerm_windows_function_app_ftps_state.md)|Warning|✔|
+|[azurerm_windows_function_app_https_only](./rules/azurerm_windows_function_app_https_only.md)|Warning|✔|
+|[azurerm_windows_function_app_minimum_tls_version](./rules/azurerm_windows_function_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_windows_web_app_ftps_state](./rules/azurerm_windows_web_app_ftps_state.md)|Warning|✔|
+|[azurerm_windows_web_app_https_only](./rules/azurerm_windows_web_app_https_only.md)|Warning|✔|
+|[azurerm_windows_web_app_minimum_tls_version](./rules/azurerm_windows_web_app_minimum_tls_version.md)|Warning|✔|
 
-## azurerm_key_vault
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)|Consider disabling public network access on keyvaults. |NOTICE||
-|[azurerm_key_vault_network_acls_default_deny](./rules/azurerm_key_vault_network_acls_default_deny.md)|Deny network access to Keyvaults. You can add `bypass = "AzureServices"` to allow azure services to connect to keyvault or add `ip_rules`|WARNING|✔|
+## Rules by Resource
 
-## azurerm_linux_function_app
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)|Disable sftp to a linux function app |WARNING|✔|
-|[azurerm_linux_function_app_https_only](./rules/azurerm_linux_function_app_https_only.md)|Force all traffic over https |WARNING|✔|
-|[azurerm_linux_function_app_minimum_tls_version](./rules/azurerm_linux_function_app_minimum_tls_version.md)|Enforce TLS 1.2 on linux function apps |WARNING|✔|
+### azurerm_eventhub_namespace
 
-## azurerm_linux_web_app
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_linux_web_app_ftps_state](./rules/azurerm_linux_web_app_ftps_state.md)|Disable sftp to a linux web app |WARNING|✔|
-|[azurerm_linux_web_app_https_only](./rules/azurerm_linux_web_app_https_only.md)|Force all traffic over https |WARNING|✔|
-|[azurerm_linux_web_app_minimum_tls_version](./rules/azurerm_linux_web_app_minimum_tls_version.md)|Enforce TLS 1.2 on linux web apps |WARNING|✔|
+- [azurerm_eventhub_namespace_public_network_access_enabled](./rules/azurerm_eventhub_namespace_public_network_access_enabled.md)
+- [azurerm_eventhub_namespace_unsecure_tls](./rules/azurerm_eventhub_namespace_unsecure_tls.md)
 
-## azurerm_mssql_database
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_mssql_database_transparent_data_encryption_enabled](./rules/azurerm_mssql_database_encryption.md)|Enforce transparant data encryption|WARNING|✔|
+### azurerm_iothub_endpoint_eventhub
 
-## azurerm_mssql_server
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_mssql_server_azuread_authentication_only](./rules/azurerm_mssql_server_azuread_authentication_only.md)|Only user Azure AD authentication to SQL |WARNING|✔|
-|[azurerm_mssql_server_public_network_access_enabled](./rules/azurerm_mssql_server_public_network_access_enabled.md)|Consider disabling public network access on SQL servers. |NOTICE|✔|
-|[azurerm_mssql_server_minimum_tls_version](./rules/azurerm_mssql_server_unsecure_tls.md)|Enforce TLS 1.2 on SQL servers. |WARNING|✔|
+- [azurerm_iothub_endpoint_eventhub_authentication_type](./rules/azurerm_iothub_endpoint_eventhub_authentication_type.md)
 
-## azurerm_mssql_firewall_rule
+### azurerm_key_vault
 
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_mssql_firewall_rule_all_allowed](./rules/azurerm_mssql_firewall_rule_all_allowed.md)|Remove a firewall rule that allows any ip.|ERROR|✔|
+- [azurerm_key_vault_network_acls_default_deny](./rules/azurerm_key_vault_network_acls_default_deny.md)
+- [azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)
 
+### azurerm_linux_function_app
 
-## azurerm_storage_account
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_storage_account_https_traffic_only_enabled](./rules/azurerm_storage_account_https_traffic_only_enabled.md)|Enforce all traffic to use https on storage accounts|WARNING|✔|
-|[azurerm_storage_account_public_network_access_enabled](./rules/azurerm_storage_account_public_network_access_enabled.md)|Consider disabling public network access on storage accounts. |NOTICE|✔|
-|[azurerm_storage_account_tls_version](./rules/azurerm_storage_account_unsecure_tls.md)|Enforce TLS 1.2 on storage accounts |WARNING|✔|
+- [azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)
+- [azurerm_linux_function_app_https_only](./rules/azurerm_linux_function_app_https_only.md)
+- [azurerm_linux_function_app_minimum_tls_version](./rules/azurerm_linux_function_app_minimum_tls_version.md)
 
-## azurerm_windows_function_app
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_windows_function_app_ftps_state](./rules/azurerm_windows_function_app_ftps_state.md)|Disable sftp to a windows function app |WARNING|✔|
-|[azurerm_windows_function_app_https_only](./rules/azurerm_windows_function_app_https_only.md)|Force all traffic over https |WARNING|✔|
-|[azurerm_windows_function_app_minimum_tls_version](./rules/azurerm_windows_function_app_minimum_tls_version.md)|Enforce TLS 1.2 on windows function apps |WARNING|✔|
+### azurerm_linux_web_app
 
+- [azurerm_linux_web_app_ftps_state](./rules/azurerm_linux_web_app_ftps_state.md)
+- [azurerm_linux_web_app_https_only](./rules/azurerm_linux_web_app_https_only.md)
+- [azurerm_linux_web_app_minimum_tls_version](./rules/azurerm_linux_web_app_minimum_tls_version.md)
 
-## azurerm_windows_web_app
-|Name|Description|Severity|Enabled|
-| --- | --- | --- | --- |
-|[azurerm_windows_web_app_ftps_state](./rules/azurerm_windows_web_app_ftps_state.md)|Disable sftp to a windows web app |WARNING|✔|
-|[azurerm_windows_web_app_https_only](./rules/azurerm_windows_web_app_https_only.)|Force all traffic over https |WARNING|✔|
-|[azurerm_windows_web_app_minimum_tls_version](./rules/azurerm_windows_web_app_minimum_tls_version.md)|Enforce TLS 1.2 on windows web apps |WARNING|✔|
+### azurerm_mssql_database
+
+- [azurerm_mssql_database_encryption](./rules/azurerm_mssql_database_encryption.md)
+
+### azurerm_mssql_firewall_rule
+
+- [azurerm_mssql_firewall_rule_all_allowed](./rules/azurerm_mssql_firewall_rule_all_allowed.md)
+
+### azurerm_mssql_server
+
+- [azurerm_mssql_server_azuread_authentication_only](./rules/azurerm_mssql_server_azuread_authentication_only.md)
+- [azurerm_mssql_server_public_network_access_enabled](./rules/azurerm_mssql_server_public_network_access_enabled.md)
+- [azurerm_mssql_server_unsecure_tls](./rules/azurerm_mssql_server_unsecure_tls.md)
+
+### azurerm_storage_account
+
+- [azurerm_storage_account_https_traffic_only_enabled](./rules/azurerm_storage_account_https_traffic_only_enabled.md)
+- [azurerm_storage_account_public_network_access_enabled](./rules/azurerm_storage_account_public_network_access_enabled.md)
+- [azurerm_storage_account_unsecure_tls](./rules/azurerm_storage_account_unsecure_tls.md)
+
+### azurerm_windows_function_app
+
+- [azurerm_windows_function_app_ftps_state](./rules/azurerm_windows_function_app_ftps_state.md)
+- [azurerm_windows_function_app_https_only](./rules/azurerm_windows_function_app_https_only.md)
+- [azurerm_windows_function_app_minimum_tls_version](./rules/azurerm_windows_function_app_minimum_tls_version.md)
+
+### azurerm_windows_web_app
+
+- [azurerm_windows_web_app_ftps_state](./rules/azurerm_windows_web_app_ftps_state.md)
+- [azurerm_windows_web_app_https_only](./rules/azurerm_windows_web_app_https_only.md)
+- [azurerm_windows_web_app_minimum_tls_version](./rules/azurerm_windows_web_app_minimum_tls_version.md)
+
