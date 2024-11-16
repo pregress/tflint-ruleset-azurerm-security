@@ -5,7 +5,9 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	// "github.com/terraform-linters/tflint-ruleset-azurerm/project"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
+	
 )
 
 // AzurermStorageAccountUnsecureTLS checks the pattern is valid
@@ -46,7 +48,7 @@ func (r *AzurermStorageAccountUnsecureTLS) Severity() tflint.Severity {
 
 // Link returns the rule reference link
 func (r *AzurermStorageAccountUnsecureTLS) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks the pattern is valid

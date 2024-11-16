@@ -3,6 +3,8 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermEventhubNamespacePublicNetworkAccessEnabled checks that transparent data encryption is enabled
@@ -37,8 +39,8 @@ func (r *AzurermEventhubNamespacePublicNetworkAccessEnabled) Severity() tflint.S
 }
 
 // Link returns the rule reference link
-func (r *AzurermEventhubNamespacePublicNetworkAccessEnabled) Link() string {
-	return ""
+func (r *AzurermEventhubNamespacePublicNetworkAccessEnabled) Link() string {	
+	return project.ReferenceLink(r.Name())
 }
 
 // Check checks if transparent data encryption is enabled

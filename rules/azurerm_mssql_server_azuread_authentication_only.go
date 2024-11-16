@@ -6,6 +6,8 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermMsSQLServerAdAuthOnly checks that azuread_authentication_only is set to true
@@ -43,7 +45,7 @@ func (r *AzurermMsSQLServerAdAuthOnly) Severity() tflint.Severity {
 
 // Link returns the rule reference link
 func (r *AzurermMsSQLServerAdAuthOnly) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check verifies that azuread_authentication_only is set to "Disabled"

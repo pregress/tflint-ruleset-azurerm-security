@@ -5,6 +5,8 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
 // AzurermWindowsWebAppMinimumTLSVersion checks that minimum_tls_version is set to at least "1.2"
@@ -42,7 +44,7 @@ func (r *AzurermWindowsWebAppMinimumTLSVersion) Severity() tflint.Severity {
 
 // Link returns the rule reference link
 func (r *AzurermWindowsWebAppMinimumTLSVersion) Link() string {
-	return ""
+	return project.ReferenceLink(r.Name())
 }
 
 // Check verifies that minimum_tls_version is at least "1.2"
