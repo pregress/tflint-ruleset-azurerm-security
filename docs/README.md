@@ -7,6 +7,7 @@
 |[azurerm_eventhub_namespace_public_network_access_enabled](./rules/azurerm_eventhub_namespace_public_network_access_enabled.md)|Notice|✔|
 |[azurerm_eventhub_namespace_unsecure_tls](./rules/azurerm_eventhub_namespace_unsecure_tls.md)|Warning|✔|
 |[azurerm_iothub_endpoint_eventhub_authentication_type](./rules/azurerm_iothub_endpoint_eventhub_authentication_type.md)|Notice|✔|
+|[azurerm_key_vault_certificate_lifetime_action](./rules/azurerm_key_vault_certificate_lifetime_action.md)|Warning|✔|
 |[azurerm_key_vault_enable_rbac_authorization](./rules/azurerm_key_vault_enable_rbac_authorization.md)|Warning||
 |[azurerm_key_vault_network_acls_default_deny](./rules/azurerm_key_vault_network_acls_default_deny.md)|Warning|✔|
 |[azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)|Notice||
@@ -59,6 +60,10 @@
 - [azurerm_key_vault_enable_rbac_authorization](./rules/azurerm_key_vault_enable_rbac_authorization.md)
 - [azurerm_key_vault_network_acls_default_deny](./rules/azurerm_key_vault_network_acls_default_deny.md)
 - [azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)
+
+### azurerm_key_vault_certificate
+
+- [azurerm_key_vault_certificate_lifetime_action](./rules/azurerm_key_vault_certificate_lifetime_action.md)
 
 ### azurerm_linux_function_app
 

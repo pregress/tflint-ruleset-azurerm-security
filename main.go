@@ -17,6 +17,7 @@ func createRuleSet() *tflint.BuiltinRuleSet {
 			rules.NewAzurermIoTHubEndpointEventHubAuthenticationType(),
 			rules.NewAzurermKeyVaultNetworkACLsDefaultDeny(),
 			rules.NewAzurermKeyVaultPublicNetworkAccessEnabled(),
+			rules.NewAzurermKeyVaultCertificateLifetimeAction(),
 			rules.NewAzurermKeyVaultRbacDisabled(),
 			rules.NewAzurermLinuxFunctionAppFtpsState(),
 			rules.NewAzurermLinuxFunctionAppHTTPSOnly(),
