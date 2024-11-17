@@ -17,10 +17,11 @@ Using identityBased authentication with a managed identity enhances security by 
 
 ## How to Fix
 
+```hcl
 resource "azurerm_iothub_endpoint_eventhub" "example" {
     authentication_type = "identityBased"
 }
-
+```
 
 ## How to disable
 
