@@ -9,6 +9,7 @@
 |[azurerm_iothub_endpoint_eventhub_authentication_type](./rules/azurerm_iothub_endpoint_eventhub_authentication_type.md)|Notice|✔|
 |[azurerm_key_vault_certificate_lifetime_action](./rules/azurerm_key_vault_certificate_lifetime_action.md)|Warning|✔|
 |[azurerm_key_vault_enable_rbac_authorization](./rules/azurerm_key_vault_enable_rbac_authorization.md)|Warning||
+|[azurerm_key_vault_key_rotation_policy](./rules/azurerm_key_vault_key_rotation_policy.md)|Warning|✔|
 |[azurerm_key_vault_network_acls_default_deny](./rules/azurerm_key_vault_network_acls_default_deny.md)|Warning|✔|
 |[azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)|Notice||
 |[azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)|Warning|✔|
@@ -64,6 +65,10 @@
 ### azurerm_key_vault_certificate
 
 - [azurerm_key_vault_certificate_lifetime_action](./rules/azurerm_key_vault_certificate_lifetime_action.md)
+
+### azurerm_key_vault_key
+
+- [azurerm_key_vault_key_rotation_policy](./rules/azurerm_key_vault_key_rotation_policy.md)
 
 ### azurerm_linux_function_app
 
