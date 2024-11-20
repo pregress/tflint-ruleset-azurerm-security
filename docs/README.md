@@ -29,6 +29,9 @@
 |[azurerm_mssql_server_azuread_authentication_only](./rules/azurerm_mssql_server_azuread_authentication_only.md)|Warning|✔|
 |[azurerm_mssql_server_public_network_access_enabled](./rules/azurerm_mssql_server_public_network_access_enabled.md)|Notice|✔|
 |[azurerm_mssql_server_unsecure_tls](./rules/azurerm_mssql_server_unsecure_tls.md)|Warning|✔|
+|[azurerm_redis_cache_active_directory_authentication_enabled](./rules/azurerm_redis_cache_active_directory_authentication_enabled.md)|Notice|✔|
+|[azurerm_redis_cache_minimum_tls_version](./rules/azurerm_redis_cache_minimum_tls_version.md)|Warning|✔|
+|[azurerm_redis_cache_non_ssl_port_enabled](./rules/azurerm_redis_cache_non_ssl_port_enabled.md)|Warning|✔|
 |[azurerm_storage_account_https_traffic_only_enabled](./rules/azurerm_storage_account_https_traffic_only_enabled.md)|Warning|✔|
 |[azurerm_storage_account_public_network_access_enabled](./rules/azurerm_storage_account_public_network_access_enabled.md)|Notice|✔|
 |[azurerm_storage_account_unsecure_tls](./rules/azurerm_storage_account_unsecure_tls.md)|Warning|✔|
@@ -107,6 +110,12 @@
 - [azurerm_mssql_server_azuread_authentication_only](./rules/azurerm_mssql_server_azuread_authentication_only.md)
 - [azurerm_mssql_server_public_network_access_enabled](./rules/azurerm_mssql_server_public_network_access_enabled.md)
 - [azurerm_mssql_server_unsecure_tls](./rules/azurerm_mssql_server_unsecure_tls.md)
+
+### azurerm_redis_cache
+
+- [azurerm_redis_cache_active_directory_authentication_enabled](./rules/azurerm_redis_cache_active_directory_authentication_enabled.md)
+- [azurerm_redis_cache_minimum_tls_version](./rules/azurerm_redis_cache_minimum_tls_version.md)
+- [azurerm_redis_cache_non_ssl_port_enabled](./rules/azurerm_redis_cache_non_ssl_port_enabled.md)
 
 ### azurerm_storage_account
 
