@@ -4,13 +4,14 @@ package main
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/plugin"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
+	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/rules"
 )
 
 func createRuleSet() *tflint.BuiltinRuleSet {
 	return &tflint.BuiltinRuleSet{
 		Name:    "azurerm-security",
-		Version: "0.1.6",
+		Version: project.Version,
 		Rules: []tflint.Rule{
 			rules.NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
 			rules.NewAzurermEventhubNamespaceUnsecureTLS(),
@@ -37,6 +38,9 @@ func createRuleSet() *tflint.BuiltinRuleSet {
 			rules.NewAzurermMsSQLServerAdAuthOnly(),
 			rules.NewAzurermMsSQLServerPublicNetworkAccessEnabled(),
 			rules.NewAzurermMsSQLServerUnsecureTLS(),
+			rules.NewAzurermRedisCacheAADAuhtenticationEnabled(),
+			rules.NewAzurermRedisCacheMinimumTLSVersion(),
+			rules.NewAzurermRedisCacheNonSSLPortEnabled(),
 			rules.NewAzurermStorageAccountHTTPSTrafficOnlyEnabled(),
 			rules.NewAzurermStorageAccountPublicNetworkAccessEnabled(),
 			rules.NewAzurermStorageAccountUnsecureTLS(),
