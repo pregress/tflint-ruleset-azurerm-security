@@ -14,7 +14,7 @@ func Test_AzurermKeyVaultPublicNetworkAccessEnabled(t *testing.T) {
 		Expected helper.Issues
 	}{
 		{
-			Name: "public network access disabled",
+			Name: "public network access enabled",
 			Content: `
 resource "azurerm_key_vault" "example" {
     public_network_access_enabled = true
@@ -22,24 +22,7 @@ resource "azurerm_key_vault" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermKeyVaultPublicNetworkAccessEnabled(),
-					Message: "Consider changing public_network_access_enabled to false",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start:    hcl.Pos{Line: 3, Column: 37},
-						End:      hcl.Pos{Line: 3, Column: 41},
-					},
-				},
-			},
-		},
-		{
-			Name: "public network access missing",
-			Content: `
-resource "azurerm_key_vault" "example" {
-}`,
-			Expected: helper.Issues{
-				{
-					Rule:    NewAzurermKeyVaultPublicNetworkAccessEnabled(),
-					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it",
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_acls block with default_action = Deny",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 2, Column: 1},
@@ -49,10 +32,78 @@ resource "azurerm_key_vault" "example" {
 			},
 		},
 		{
+			Name: "public network access missing and network_acls missing",
+			Content: `
+resource "azurerm_key_vault" "example" {
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermKeyVaultPublicNetworkAccessEnabled(),
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_acls block with default_action = Deny",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 2, Column: 1},
+						End:      hcl.Pos{Line: 2, Column: 39},
+					},
+				},
+			},
+		},
+		{
+			Name: "public network access missing and network_acls empty",
+			Content: `
+resource "azurerm_key_vault" "example" {
+    network_acls {
+	}
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermKeyVaultPublicNetworkAccessEnabled(),
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_acls block with default_action = Deny",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 2, Column: 1},
+						End:      hcl.Pos{Line: 2, Column: 39},
+					},
+				},
+			},
+		},
+		{
+			Name: "public network access enabled and network_acls default action allow",
+			Content: `
+resource "azurerm_key_vault" "example" {
+    public_network_access_enabled = true
+	network_acls {
+	    default_action = "Allow"
+	}
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermKeyVaultPublicNetworkAccessEnabled(),
+					Message: "public_network_access_enabled is true and network_acls block with default_action = Allow, Consider changing the default_action to deny",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 5, Column: 23},
+						End:      hcl.Pos{Line: 5, Column: 30},
+					},
+				},
+			},
+		},
+		{
 			Name: "public network access disabled",
 			Content: `
 resource "azurerm_key_vault" "example" {
     public_network_access_enabled = false
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "public network access enabled and network_acls default action deny",
+			Content: `
+resource "azurerm_key_vault" "example" {
+    public_network_access_enabled = true
+	network_acls {
+	    default_action = "Deny"
+	}
 }`,
 			Expected: helper.Issues{},
 		},

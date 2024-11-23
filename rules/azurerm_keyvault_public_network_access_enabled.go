@@ -3,7 +3,7 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	
+
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
@@ -30,7 +30,7 @@ func (r *AzurermKeyVaultPublicNetworkAccessEnabled) Name() string {
 
 // Enabled returns whether the rule is enabled by default
 func (r *AzurermKeyVaultPublicNetworkAccessEnabled) Enabled() bool {
-	return false
+	return true
 }
 
 // Severity returns the rule severity
@@ -49,37 +49,72 @@ func (r *AzurermKeyVaultPublicNetworkAccessEnabled) Check(runner tflint.Runner) 
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},
 		},
+		Blocks: []hclext.BlockSchema{
+			{
+				Type: "network_acls",
+				Body: &hclext.BodySchema{
+					Attributes: []hclext.AttributeSchema{
+						{Name: "default_action"},
+					},
+				},
+			},
+		},
 	}, nil)
 	if err != nil {
 		return err
 	}
 
 	for _, resource := range resources.Blocks {
+		// Check if the `public_network_access_enabled` attribute exists and its value
 		attribute, exists := resource.Body.Attributes[r.attributeName]
+		publicNetworkEnabled := false
 		if !exists {
-			// Emit an issue if the attribute does not exist
-			runner.EmitIssue(
-				r,
-				"public_network_access_enabled is not defined and defaults to true, consider disabling it",
-				resource.DefRange,
-			)
-			continue
+			publicNetworkEnabled = true
+		} else {
+			if err := runner.EvaluateExpr(attribute.Expr, &publicNetworkEnabled, nil); err != nil {
+				return err
+			}
+
+			if !publicNetworkEnabled {
+				return nil
+			}
 		}
 
-		err := runner.EvaluateExpr(attribute.Expr, func(val bool) error {
-			if val {
+		// Check network_acls block when `public_network_access_enabled` is true
+		if publicNetworkEnabled {
+			issueEmitted := false
+			for _, block := range resource.Body.Blocks {
+				if block.Type == "network_acls" {
+					actionAttr, exists := block.Body.Attributes["default_action"]
+					if exists {
+						var defaultAction string
+						if err := runner.EvaluateExpr(actionAttr.Expr, &defaultAction, nil); err != nil {
+							return err
+						}
+						if defaultAction == "Allow" {
+							runner.EmitIssue(
+								r,
+								"public_network_access_enabled is true and network_acls block with default_action = Allow, Consider changing the default_action to deny",
+								actionAttr.Expr.Range(),
+							)
+							issueEmitted = true
+						} else {
+							return nil
+						}
+					}
+				}
+			}
+
+			if !issueEmitted {
 				runner.EmitIssue(
 					r,
-					"Consider changing public_network_access_enabled to false",
-					attribute.Expr.Range(),
+					"public_network_access_enabled is not defined and defaults to true, consider disabling it or add network_acls block with default_action = Deny",
+					resource.DefRange,
 				)
+				continue
 			}
-			return nil
-		}, nil)
-
-		if err != nil {
-			return err
 		}
+
 	}
 
 	return nil
