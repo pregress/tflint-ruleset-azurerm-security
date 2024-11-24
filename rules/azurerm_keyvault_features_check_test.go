@@ -108,7 +108,7 @@ resource "azurerm_key_vault" "example" {
 						},
 						End: hcl.Pos{
 							Line:   2,
-							Column: 43,
+							Column: 19,
 						},
 					},
 				},
@@ -130,12 +130,12 @@ resource "azurerm_key_vault" "example" {
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   3,
-							Column: 3,
+							Line:   2,
+							Column: 1,
 						},
 						End: hcl.Pos{
-							Line:   3,
-							Column: 11,
+							Line:   2,
+							Column: 19,
 						},
 					},
 				},
@@ -164,7 +164,7 @@ resource "azurerm_key_vault" "example" {
 						},
 						End: hcl.Pos{
 							Line:   2,
-							Column: 43,
+							Column: 19,
 						},
 					},
 				},
@@ -225,11 +225,11 @@ resource "azurerm_key_vault" "example" {
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   2,
-							Column: 1,
+							Line:   6,
+							Column: 7,
 						},
 						End: hcl.Pos{
-							Line:   2,
+							Line:   6,
 							Column: 43,
 						},
 					},
@@ -291,12 +291,12 @@ resource "azurerm_key_vault" "example" {
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   12,
-							Column: 1,
+							Line:   7,
+							Column: 7,
 						},
 						End: hcl.Pos{
-							Line:   12,
-							Column: 39,
+							Line:   7,
+							Column: 46,
 						},
 					},
 				},
@@ -337,11 +337,11 @@ resource "azurerm_key_vault" "example2" {
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
-							Line:   5,
+							Line:   15,
 							Column: 7,
 						},
 						End: hcl.Pos{
-							Line:   5,
+							Line:   15,
 							Column: 43,
 						},
 					},
