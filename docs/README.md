@@ -11,6 +11,7 @@
 |[azurerm_key_vault_enable_rbac_authorization](./rules/azurerm_key_vault_enable_rbac_authorization.md)|Warning||
 |[azurerm_key_vault_key_rotation_policy](./rules/azurerm_key_vault_key_rotation_policy.md)|Warning|✔|
 |[azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)|Notice|✔|
+|[azurerm_keyvault_features_check](./rules/azurerm_keyvault_features_check.md)|Warning|✔|
 |[azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)|Warning|✔|
 |[azurerm_linux_function_app_https_only](./rules/azurerm_linux_function_app_https_only.md)|Warning|✔|
 |[azurerm_linux_function_app_minimum_tls_version](./rules/azurerm_linux_function_app_minimum_tls_version.md)|Warning|✔|
@@ -62,6 +63,7 @@
 
 - [azurerm_key_vault_enable_rbac_authorization](./rules/azurerm_key_vault_enable_rbac_authorization.md)
 - [azurerm_key_vault_public_network_access_enabled](./rules/azurerm_key_vault_public_network_access_enabled.md)
+- [azurerm_keyvault_features_check](./rules/azurerm_keyvault_features_check.md)
 
 ### azurerm_key_vault_certificate
 
