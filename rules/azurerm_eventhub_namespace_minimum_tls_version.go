@@ -5,7 +5,7 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	
+
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
@@ -46,7 +46,7 @@ func (r *AzurermEventhubNamespaceUnsecureTLS) Severity() tflint.Severity {
 }
 
 // Link returns the rule reference link
-func (r *AzurermEventhubNamespaceUnsecureTLS) Link() string {	
+func (r *AzurermEventhubNamespaceUnsecureTLS) Link() string {
 	return project.ReferenceLink(r.Name())
 }
 
@@ -66,7 +66,7 @@ func (r *AzurermEventhubNamespaceUnsecureTLS) Check(runner tflint.Runner) error 
 		if !exists {
 			continue
 		}
-		err := runner.EvaluateExpr(attribute.Expr, func (val string) error {
+		err := runner.EvaluateExpr(attribute.Expr, func(val string) error {
 			found := false
 			for _, item := range r.enum {
 				if item == val {
