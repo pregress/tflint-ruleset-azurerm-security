@@ -17,16 +17,16 @@ func Test_AzurermMsSQLServerUnsecureTLS(t *testing.T) {
 			Name: "insecure TLS version found",
 			Content: `
 resource "azurerm_mssql_server" "example" {
-    min_tls_version = "TLS1_0"
+    min_tls_version = "1.0"
 }`,
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermMsSQLServerUnsecureTLS(),
-					Message: `"TLS1_0" is an insecure value as min_tls_version`,
+					Message: `"1.0" is an insecure value as min_tls_version`,
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 3, Column: 23},
-						End:      hcl.Pos{Line: 3, Column: 31},
+						End:      hcl.Pos{Line: 3, Column: 28},
 					},
 				},
 			},
@@ -35,7 +35,7 @@ resource "azurerm_mssql_server" "example" {
 			Name: "secure TLS version",
 			Content: `
 resource "azurerm_mssql_server" "example" {
-    min_tls_version = "TLS1_2"
+    min_tls_version = "1.2"
 }`,
 			Expected: helper.Issues{},
 		},
