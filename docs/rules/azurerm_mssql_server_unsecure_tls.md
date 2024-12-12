@@ -7,7 +7,7 @@
 
 ```hcl
 resource "azurerm_mssql_server" "example" {
-    min_tls_version = "TLS1_0"
+    min_tls_version = "1.0"
 }
 ```
 
@@ -19,7 +19,7 @@ Enforcing a minimum TLS version of 1.2 ensures secure communication by adhering 
 
 ```hcl
 resource "azurerm_mssql_server" "example" {
-    min_tls_version = "TLS1_2"
+    min_tls_version = "1.2"
 }
 ```
 

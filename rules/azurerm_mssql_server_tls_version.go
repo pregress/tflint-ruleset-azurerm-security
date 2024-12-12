@@ -5,9 +5,8 @@ import (
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	
+
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
-	
 )
 
 // AzurermMsSQLServerUnsecureTLS checks the pattern is valid
@@ -25,8 +24,8 @@ func NewAzurermMsSQLServerUnsecureTLS() *AzurermMsSQLServerUnsecureTLS {
 		resourceType:  "azurerm_mssql_server",
 		attributeName: "min_tls_version",
 		enum: []string{
-			"TLS1_2",
-			"TLS1_3",
+			"1.2",
+			"1.3",
 		},
 	}
 }
@@ -67,7 +66,7 @@ func (r *AzurermMsSQLServerUnsecureTLS) Check(runner tflint.Runner) error {
 		if !exists {
 			continue
 		}
-		err := runner.EvaluateExpr(attribute.Expr, func (val string) error {
+		err := runner.EvaluateExpr(attribute.Expr, func(val string) error {
 			found := false
 			for _, item := range r.enum {
 				if item == val {
