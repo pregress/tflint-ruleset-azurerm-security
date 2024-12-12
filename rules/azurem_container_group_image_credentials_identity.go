@@ -31,6 +31,7 @@ func (r *AzurermContainerGroupImageRegistryCredentialIdentity) Name() string {
 	return "azurerm_container_group_image_registry_credential_identity"
 }
 
+// Severity returns the rule severity
 func (r *AzurermContainerGroupImageRegistryCredentialIdentity) Severity() tflint.Severity {
 	return tflint.WARNING
 }
@@ -40,6 +41,7 @@ func (r *AzurermContainerGroupImageRegistryCredentialIdentity) Enabled() bool {
 	return true
 }
 
+// Link returns the rule reference link
 func (r *AzurermContainerGroupImageRegistryCredentialIdentity) Link() string {
 	return project.ReferenceLink(r.Name())
 }
