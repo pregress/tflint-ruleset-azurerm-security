@@ -14,19 +14,19 @@ func Test_AzurermStorageAccountHTTPSTrafficOnlyEnabled(t *testing.T) {
 		Expected helper.Issues
 	}{
 		{
-			Name: "https_traffic_only disabled",
+			Name: "https_traffic_only_enabled disabled",
 			Content: `
 resource "azurerm_storage_account" "example" {
-    https_traffic_only = false
+    https_traffic_only_enabled = false
 }`,
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountHTTPSTrafficOnlyEnabled(),
-					Message: "https_traffic_only should be true",
+					Message: "https_traffic_only_enabled should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
-						Start:    hcl.Pos{Line: 3, Column: 26},
-						End:      hcl.Pos{Line: 3, Column: 31},
+						Start:    hcl.Pos{Line: 3, Column: 34},
+						End:      hcl.Pos{Line: 3, Column: 39},
 					},
 				},
 			},
@@ -39,7 +39,7 @@ resource "azurerm_storage_account" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountHTTPSTrafficOnlyEnabled(),
-					Message: "https_traffic_only is not defined and should be true",
+					Message: "https_traffic_only_enabled is not defined and should be true",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 2, Column: 1},
@@ -49,10 +49,10 @@ resource "azurerm_storage_account" "example" {
 			},
 		},
 		{
-			Name: "https_traffic_only enabled",
+			Name: "https_traffic_only_enabled enabled",
 			Content: `
 resource "azurerm_storage_account" "example" {
-    https_traffic_only = true
+    https_traffic_only_enabled = true
 }`,
 			Expected: helper.Issues{},
 		},
