@@ -46,6 +46,38 @@ resource "azurerm_container_group" "example" {
 }`,
 			expected: helper.Issues{},
 		},
+		{
+			name: "with user_assigned_identity_id and login server from data source",
+			content: `
+data "azurerm_container_registry" "example" {
+  name                = "example"
+  resource_group_name = "example"
+}
+
+resource "azurerm_container_group" "example" {
+  image_registry_credential {
+    server = data.azurerm_container_registry.example.login_server
+    user_assigned_identity_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test"
+  }
+}`,
+			expected: helper.Issues{},
+		},
+		{
+			name: "with user_assigned_identity_id and login server from resource",
+			content: `
+resource "azurerm_container_registry" "example" {
+  name                = "example"
+  resource_group_name = "example"
+}
+
+resource "azurerm_container_group" "example" {
+  image_registry_credential {
+    server = azurerm_container_registry.example.login_server
+    user_assigned_identity_id = "/subscriptions/00000000-0000-0000-0000-000000000000/resourceGroups/test/providers/Microsoft.ManagedIdentity/userAssignedIdentities/test"
+  }
+}`,
+			expected: helper.Issues{},
+		},
 	}
 
 	for _, test := range tests {
