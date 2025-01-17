@@ -3,7 +3,7 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	
+
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
@@ -19,7 +19,7 @@ type AzurermStorageAccountHTTPSTrafficOnlyEnabled struct {
 func NewAzurermStorageAccountHTTPSTrafficOnlyEnabled() *AzurermStorageAccountHTTPSTrafficOnlyEnabled {
 	return &AzurermStorageAccountHTTPSTrafficOnlyEnabled{
 		resourceType:  "azurerm_storage_account",
-		attributeName: "https_traffic_only",
+		attributeName: "https_traffic_only_enabled",
 	}
 }
 
@@ -60,7 +60,7 @@ func (r *AzurermStorageAccountHTTPSTrafficOnlyEnabled) Check(runner tflint.Runne
 			// Emit an issue if the attribute does not exist
 			runner.EmitIssue(
 				r,
-				"https_traffic_only is not defined and should be true",
+				"https_traffic_only_enabled is not defined and should be true",
 				resource.DefRange,
 			)
 			continue
@@ -70,7 +70,7 @@ func (r *AzurermStorageAccountHTTPSTrafficOnlyEnabled) Check(runner tflint.Runne
 			if !val {
 				runner.EmitIssue(
 					r,
-					"https_traffic_only should be true",
+					"https_traffic_only_enabled should be true",
 					attribute.Expr.Range(),
 				)
 			}
