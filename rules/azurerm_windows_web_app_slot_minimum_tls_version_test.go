@@ -24,7 +24,7 @@ resource "azurerm_windows_web_app_slot" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermWindowsWebAppSlotMinimumTLSVersion(),
-					Message: "minimum_tls_version is set to 1.0, should be 1.2 or higher",
+					Message: "minimum_tls_version is set to 1.0, should be 1.2 or 1.3",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
@@ -50,6 +50,16 @@ resource "azurerm_windows_web_app_slot" "example" {
 			Expected: helper.Issues{},
 		},
 		{
+			Name: "minimum_tls_version set to 1.3",
+			Content: `
+resource "azurerm_windows_web_app_slot" "example" {
+    site_config {
+        minimum_tls_version = "1.3"
+    }
+}`,
+			Expected: helper.Issues{},
+		},
+		{
 			Name: "minimum_tls_version attribute missing",
 			Content: `
 resource "azurerm_windows_web_app_slot" "example" {
@@ -59,7 +69,7 @@ resource "azurerm_windows_web_app_slot" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermWindowsWebAppSlotMinimumTLSVersion(),
-					Message: "minimum_tls_version is missing in site_config, should be set to 1.2 or higher",
+					Message: "minimum_tls_version is missing in site_config, should be set to 1.2 or 1.3",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
@@ -82,7 +92,7 @@ resource "azurerm_windows_web_app_slot" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermWindowsWebAppSlotMinimumTLSVersion(),
-					Message: "site_config block is missing, minimum_tls_version should be set to 1.2 or higher",
+					Message: "site_config block is missing, minimum_tls_version should be set to 1.2 or 1.3",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start: hcl.Pos{
@@ -92,32 +102,6 @@ resource "azurerm_windows_web_app_slot" "example" {
 						End: hcl.Pos{
 							Line:   2,
 							Column: 50,
-						},
-					},
-				},
-			},
-		},
-		{
-			Name: "minimum_tls_version set to 1.3",
-			Content: `
-resource "azurerm_windows_web_app_slot" "example" {
-    site_config {
-        minimum_tls_version = "1.3"
-    }
-}`,
-			Expected: helper.Issues{
-				{
-					Rule:    NewAzurermWindowsWebAppSlotMinimumTLSVersion(),
-					Message: "minimum_tls_version is set to 1.3, should be 1.2 or higher",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start: hcl.Pos{
-							Line:   4,
-							Column: 31,
-						},
-						End: hcl.Pos{
-							Line:   4,
-							Column: 36,
 						},
 					},
 				},

@@ -2,20 +2,22 @@ package rules
 
 import (
 	"fmt"
+	"slices"
+	"strings"
 
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	
+
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
-// AzurermWindowsFunctionAppSlotMinimumTLSVersion checks that minimum_tls_version is set to at least "1.2"
+// AzurermWindowsFunctionAppSlotMinimumTLSVersion checks that minimum_tls_version is set to "1.2" or "1.3"
 type AzurermWindowsFunctionAppSlotMinimumTLSVersion struct {
 	tflint.DefaultRule
 
 	resourceType  string
 	attributePath []string
-	version       string
+	versions      []string
 }
 
 // NewAzurermWindowsFunctionAppSlotMinimumTLSVersion returns a new rule instance
@@ -23,7 +25,7 @@ func NewAzurermWindowsFunctionAppSlotMinimumTLSVersion() *AzurermWindowsFunction
 	return &AzurermWindowsFunctionAppSlotMinimumTLSVersion{
 		resourceType:  "azurerm_windows_function_app_slot",
 		attributePath: []string{"site_config", "minimum_tls_version"},
-		version:       "1.2",
+		versions:      []string{"1.2", "1.3"},
 	}
 }
 
@@ -47,7 +49,7 @@ func (r *AzurermWindowsFunctionAppSlotMinimumTLSVersion) Link() string {
 	return project.ReferenceLink(r.Name())
 }
 
-// Check verifies that minimum_tls_version is at least "1.2"
+// Check verifies that minimum_tls_version is set to "1.2" or "1.3"
 func (r *AzurermWindowsFunctionAppSlotMinimumTLSVersion) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Blocks: []hclext.BlockSchema{
@@ -65,12 +67,14 @@ func (r *AzurermWindowsFunctionAppSlotMinimumTLSVersion) Check(runner tflint.Run
 		return err
 	}
 
+	supportedVersions := strings.Join(r.versions, " or ")
+
 	for _, resource := range resources.Blocks {
 		siteConfigBlocks := resource.Body.Blocks.OfType("site_config")
 		if len(siteConfigBlocks) == 0 {
 			runner.EmitIssue(
 				r,
-				"site_config block is missing, minimum_tls_version should be set to 1.2 or higher",
+				fmt.Sprintf("site_config block is missing, minimum_tls_version should be set to %s", supportedVersions),
 				resource.DefRange,
 			)
 			continue
@@ -81,17 +85,17 @@ func (r *AzurermWindowsFunctionAppSlotMinimumTLSVersion) Check(runner tflint.Run
 		if !exists {
 			runner.EmitIssue(
 				r,
-				"minimum_tls_version is missing in site_config, should be set to 1.2 or higher",
+				fmt.Sprintf("minimum_tls_version is missing in site_config, should be set to %s", supportedVersions),
 				siteConfig.DefRange,
 			)
 			continue
 		}
 
 		err := runner.EvaluateExpr(attribute.Expr, func(val string) error {
-			if val != r.version {
+			if !slices.Contains(r.versions, val) {
 				runner.EmitIssue(
 					r,
-					fmt.Sprintf("minimum_tls_version is set to %s, should be %s or higher", val, r.version),
+					fmt.Sprintf("minimum_tls_version is set to %s, should be %s", val, supportedVersions),
 					attribute.Expr.Range(),
 				)
 			}
