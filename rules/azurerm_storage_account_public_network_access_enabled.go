@@ -3,7 +3,7 @@ package rules
 import (
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
-	
+
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
@@ -49,18 +49,51 @@ func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Check(runner tflint.Ru
 		Attributes: []hclext.AttributeSchema{
 			{Name: r.attributeName},
 		},
+		Blocks: []hclext.BlockSchema{
+			{
+				Type: "network_rules",
+				Body: &hclext.BodySchema{
+					Attributes: []hclext.AttributeSchema{
+						{Name: "default_action"},
+					},
+				},
+			},
+		},
 	}, nil)
 	if err != nil {
 		return err
 	}
 
 	for _, resource := range resources.Blocks {
+		// Check for network_rules block with default_action = "Deny"
+		hasSecureNetworkRulesWithDeny := false
+		hasSecureNetworkRules := false
+		for _, block := range resource.Body.Blocks {
+			if block.Type == "network_rules" {
+				hasSecureNetworkRules = true
+				if defaultActionAttr, exists := block.Body.Attributes["default_action"]; exists {
+					var defaultAction string
+					if err := runner.EvaluateExpr(defaultActionAttr.Expr, &defaultAction, nil); err == nil {
+						if defaultAction == "Deny" {
+							hasSecureNetworkRulesWithDeny = true
+							break
+						}
+					}
+				}
+			}
+		}
+
+		// If network rules with default_action = "Deny" exist, the configuration is secure
+		if hasSecureNetworkRulesWithDeny {
+			continue
+		}
+
 		attribute, exists := resource.Body.Attributes[r.attributeName]
-		if !exists {
-			// Emit an issue if the attribute does not exist
+		if !exists && !hasSecureNetworkRules {
+			// If the attribute does not exist and there are no secure network rules, emit an issue
 			runner.EmitIssue(
 				r,
-				"public_network_access_enabled is not defined and defaults to true, consider disabling it",
+				"public_network_access_enabled is not defined and defaults to true, consider disabling it or adding network_rules with default_action = \"Deny\"",
 				resource.DefRange,
 			)
 			continue
@@ -70,7 +103,7 @@ func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Check(runner tflint.Ru
 			if val {
 				runner.EmitIssue(
 					r,
-					"Consider changing public_network_access_enabled to false",
+					"Consider changing public_network_access_enabled to false or add network_rules with default_action = \"Deny\"",
 					attribute.Expr.Range(),
 				)
 			}

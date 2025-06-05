@@ -14,7 +14,7 @@ func Test_AzurermStorageAccountPublicNetworkAccessEnabled(t *testing.T) {
 		Expected helper.Issues
 	}{
 		{
-			Name: "public network access disabled",
+			Name: "public network access enabled",
 			Content: `
 resource "azurerm_storage_account" "example" {
     public_network_access_enabled = true
@@ -22,7 +22,7 @@ resource "azurerm_storage_account" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
-					Message: "Consider changing public_network_access_enabled to false",
+					Message: "Consider changing public_network_access_enabled to false or add network_rules with default_action = \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 3, Column: 37},
@@ -39,7 +39,7 @@ resource "azurerm_storage_account" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
-					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it",
+					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or adding network_rules with default_action = \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 2, Column: 1},
@@ -55,6 +55,44 @@ resource "azurerm_storage_account" "example" {
     public_network_access_enabled = false
 }`,
 			Expected: helper.Issues{},
+		},
+		{
+			Name: "public network access enabled netork rules with default_action = Deny",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access_enabled = true
+
+	network_rules {
+		default_action             = "Deny"
+		bypass                     = ["AzureServices"]
+		ip_rules = ["1.1.1.1"]
+	}
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "public network access enbled network rules with default_action = Allow",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access_enabled = true
+
+	network_rules {
+		default_action             = "Allow"
+		bypass                     = ["AzureServices"]
+		ip_rules = ["1.1.1.1"]
+	}
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
+					Message: "Consider changing public_network_access_enabled to false or add network_rules with default_action = \"Deny\"",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 3, Column: 37},
+						End:      hcl.Pos{Line: 3, Column: 41},
+					},
+				},
+			},
 		},
 	}
 
