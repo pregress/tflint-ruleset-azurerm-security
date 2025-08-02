@@ -16,12 +16,14 @@
 |[azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)|Warning|✔|
 |[azurerm_linux_function_app_https_only](./rules/azurerm_linux_function_app_https_only.md)|Warning|✔|
 |[azurerm_linux_function_app_minimum_tls_version](./rules/azurerm_linux_function_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_linux_function_app_scm_ip_restriction_default_action](./rules/azurerm_linux_function_app_scm_ip_restriction_default_action.md)|Warning|✔|
 |[azurerm_linux_function_app_slot_ftps_state](./rules/azurerm_linux_function_app_slot_ftps_state.md)|Warning|✔|
 |[azurerm_linux_function_app_slot_https_only](./rules/azurerm_linux_function_app_slot_https_only.md)|Warning|✔|
 |[azurerm_linux_function_app_slot_minimum_tls_version](./rules/azurerm_linux_function_app_slot_minimum_tls_version.md)|Warning|✔|
 |[azurerm_linux_web_app_ftps_state](./rules/azurerm_linux_web_app_ftps_state.md)|Warning|✔|
 |[azurerm_linux_web_app_https_only](./rules/azurerm_linux_web_app_https_only.md)|Warning|✔|
 |[azurerm_linux_web_app_minimum_tls_version](./rules/azurerm_linux_web_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_linux_web_app_scm_ip_restriction_default_action](./rules/azurerm_linux_web_app_scm_ip_restriction_default_action.md)|Warning|✔|
 |[azurerm_linux_web_app_slot_ftps_state](./rules/azurerm_linux_web_app_slot_ftps_state.md)|Warning|✔|
 |[azurerm_linux_web_app_slot_https_only](./rules/azurerm_linux_web_app_slot_https_only.md)|Warning|✔|
 |[azurerm_linux_web_app_slot_minimum_tls_version](./rules/azurerm_linux_web_app_slot_minimum_tls_version.md)|Warning|✔|
@@ -39,12 +41,14 @@
 |[azurerm_windows_function_app_ftps_state](./rules/azurerm_windows_function_app_ftps_state.md)|Warning|✔|
 |[azurerm_windows_function_app_https_only](./rules/azurerm_windows_function_app_https_only.md)|Warning|✔|
 |[azurerm_windows_function_app_minimum_tls_version](./rules/azurerm_windows_function_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_windows_function_app_scm_ip_restriction_default_action](./rules/azurerm_windows_function_app_scm_ip_restriction_default_action.md)|Warning|✔|
 |[azurerm_windows_function_app_slot_ftps_state](./rules/azurerm_windows_function_app_slot_ftps_state.md)|Warning|✔|
 |[azurerm_windows_function_app_slot_https_only](./rules/azurerm_windows_function_app_slot_https_only.md)|Warning|✔|
 |[azurerm_windows_function_app_slot_minimum_tls_version](./rules/azurerm_windows_function_app_slot_minimum_tls_version.md)|Warning|✔|
 |[azurerm_windows_web_app_ftps_state](./rules/azurerm_windows_web_app_ftps_state.md)|Warning|✔|
 |[azurerm_windows_web_app_https_only](./rules/azurerm_windows_web_app_https_only.md)|Warning|✔|
 |[azurerm_windows_web_app_minimum_tls_version](./rules/azurerm_windows_web_app_minimum_tls_version.md)|Warning|✔|
+|[azurerm_windows_web_app_scm_ip_restriction_default_action](./rules/azurerm_windows_web_app_scm_ip_restriction_default_action.md)|Warning|✔|
 |[azurerm_windows_web_app_slot_ftps_state](./rules/azurerm_windows_web_app_slot_ftps_state.md)|Warning|✔|
 |[azurerm_windows_web_app_slot_https_only](./rules/azurerm_windows_web_app_slot_https_only.md)|Warning|✔|
 |[azurerm_windows_web_app_slot_minimum_tls_version](./rules/azurerm_windows_web_app_slot_minimum_tls_version.md)|Warning|✔|
@@ -83,6 +87,7 @@
 - [azurerm_linux_function_app_ftps_state](./rules/azurerm_linux_function_app_ftps_state.md)
 - [azurerm_linux_function_app_https_only](./rules/azurerm_linux_function_app_https_only.md)
 - [azurerm_linux_function_app_minimum_tls_version](./rules/azurerm_linux_function_app_minimum_tls_version.md)
+- [azurerm_linux_function_app_scm_ip_restriction_default_action](./rules/azurerm_linux_function_app_scm_ip_restriction_default_action.md)
 
 ### azurerm_linux_function_app_slot
 
@@ -95,6 +100,7 @@
 - [azurerm_linux_web_app_ftps_state](./rules/azurerm_linux_web_app_ftps_state.md)
 - [azurerm_linux_web_app_https_only](./rules/azurerm_linux_web_app_https_only.md)
 - [azurerm_linux_web_app_minimum_tls_version](./rules/azurerm_linux_web_app_minimum_tls_version.md)
+- [azurerm_linux_web_app_scm_ip_restriction_default_action](./rules/azurerm_linux_web_app_scm_ip_restriction_default_action.md)
 
 ### azurerm_linux_web_app_slot
 
@@ -133,6 +139,7 @@
 - [azurerm_windows_function_app_ftps_state](./rules/azurerm_windows_function_app_ftps_state.md)
 - [azurerm_windows_function_app_https_only](./rules/azurerm_windows_function_app_https_only.md)
 - [azurerm_windows_function_app_minimum_tls_version](./rules/azurerm_windows_function_app_minimum_tls_version.md)
+- [azurerm_windows_function_app_scm_ip_restriction_default_action](./rules/azurerm_windows_function_app_scm_ip_restriction_default_action.md)
 
 ### azurerm_windows_function_app_slot
 
@@ -145,6 +152,7 @@
 - [azurerm_windows_web_app_ftps_state](./rules/azurerm_windows_web_app_ftps_state.md)
 - [azurerm_windows_web_app_https_only](./rules/azurerm_windows_web_app_https_only.md)
 - [azurerm_windows_web_app_minimum_tls_version](./rules/azurerm_windows_web_app_minimum_tls_version.md)
+- [azurerm_windows_web_app_scm_ip_restriction_default_action](./rules/azurerm_windows_web_app_scm_ip_restriction_default_action.md)
 
 ### azurerm_windows_web_app_slot
 
