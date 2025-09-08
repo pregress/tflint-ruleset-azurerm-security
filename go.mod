@@ -7,7 +7,7 @@ toolchain go1.23.5
 require (
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/terraform-linters/tflint-plugin-sdk v0.22.0
-	github.com/zclconf/go-cty v1.16.4
+	github.com/zclconf/go-cty v1.17.0
 )
 
 require (
