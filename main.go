@@ -46,6 +46,7 @@ func createRuleSet() *tflint.BuiltinRuleSet {
 			rules.NewAzurermRedisCacheMinimumTLSVersion(),
 			rules.NewAzurermRedisCacheNonSSLPortEnabled(),
 			rules.NewAzurermStorageAccountHTTPSTrafficOnlyEnabled(),
+			rules.NewAzurermStorageAccountNetworkSecurityPerimeterAssociation(),
 			rules.NewAzurermStorageAccountPublicNetworkAccessEnabled(),
 			rules.NewAzurermStorageAccountUnsecureTLS(),
 			rules.NewAzurermWindowsFunctionAppFtpsState(),
