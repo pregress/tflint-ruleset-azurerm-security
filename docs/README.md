@@ -5,6 +5,7 @@
 |Name|Severity|Enabled|
 | --- | --- | --- |
 |[azurerm_container_group_image_registry_credential_identity](./rules/azurerm_container_group_image_registry_credential_identity.md)|Warning|✔|
+|[azurerm_eventhub_namespace_network_security_perimeter_association](./rules/azurerm_eventhub_namespace_network_security_perimeter_association.md)|Warning|✔|
 |[azurerm_eventhub_namespace_public_network_access_enabled](./rules/azurerm_eventhub_namespace_public_network_access_enabled.md)|Notice|✔|
 |[azurerm_eventhub_namespace_unsecure_tls](./rules/azurerm_eventhub_namespace_unsecure_tls.md)|Warning|✔|
 |[azurerm_iothub_endpoint_eventhub_authentication_type](./rules/azurerm_iothub_endpoint_eventhub_authentication_type.md)|Notice|✔|
@@ -63,6 +64,7 @@
 
 ### azurerm_eventhub_namespace
 
+- [azurerm_eventhub_namespace_network_security_perimeter_association](./rules/azurerm_eventhub_namespace_network_security_perimeter_association.md)
 - [azurerm_eventhub_namespace_public_network_access_enabled](./rules/azurerm_eventhub_namespace_public_network_access_enabled.md)
 - [azurerm_eventhub_namespace_unsecure_tls](./rules/azurerm_eventhub_namespace_unsecure_tls.md)
 

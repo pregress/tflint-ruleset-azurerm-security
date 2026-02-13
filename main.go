@@ -14,6 +14,7 @@ func createRuleSet() *tflint.BuiltinRuleSet {
 		Version: project.Version,
 		Rules: []tflint.Rule{
 			rules.NewAzurermContainerGroupImageRegistryCredentialIdentity(),
+			rules.NewAzurermEventhubNamespaceNetworkSecurityPerimeterAssociation(),
 			rules.NewAzurermEventhubNamespacePublicNetworkAccessEnabled(),
 			rules.NewAzurermEventhubNamespaceUnsecureTLS(),
 			rules.NewAzurermIoTHubEndpointEventHubAuthenticationType(),
