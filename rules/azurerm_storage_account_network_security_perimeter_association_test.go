@@ -100,6 +100,22 @@ resource "azurerm_network_security_perimeter_association" "example2" {
 			Expected: helper.Issues{},
 		},
 		{
+			Name: "storage account with count and NSP association with count",
+			Content: `
+resource "azurerm_storage_account" "example1" {
+  count = var.test ? 1 : 0
+}
+
+resource "azurerm_network_security_perimeter_association" "example1" {
+  count = var.test ? 1 : 0
+  resource_id                           = azurerm_storage_account.example1[0].id
+}
+
+resource "azurerm_network_security_perimeter_association" "example2" {
+}`,
+			Expected: helper.Issues{},
+		},
+		{
 			Name: "no storage accounts defined",
 			Content: `
 resource "azurerm_resource_group" "example" {

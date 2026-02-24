@@ -79,9 +79,15 @@ func (r *AzurermKeyVaultNetworkSecurityPerimeterAssociation) Check(runner tflint
 						if root.Name == "azurerm_key_vault" {
 							if attrTraverse, ok := v[1].(hcl.TraverseAttr); ok {
 								keyVaultName := attrTraverse.Name
-								if idTraverse, ok := v[2].(hcl.TraverseAttr); ok {
-									if idTraverse.Name == "id" {
+								if len(v) == 3 {
+									if idTraverse, ok := v[2].(hcl.TraverseAttr); ok && idTraverse.Name == "id" {
 										associatedKeyVaults[keyVaultName] = true
+									}
+								} else if len(v) == 4 {
+									if _, ok := v[2].(hcl.TraverseIndex); ok {
+										if idTraverse, ok := v[3].(hcl.TraverseAttr); ok && idTraverse.Name == "id" {
+											associatedKeyVaults[keyVaultName] = true
+										}
 									}
 								}
 							}
@@ -94,6 +100,14 @@ func (r *AzurermKeyVaultNetworkSecurityPerimeterAssociation) Check(runner tflint
 
 	// Check each key vault to see if it has an NSP association
 	for _, keyVault := range keyVaults.Blocks {
+		// Skip key vaults with count or for_each as they may not be created
+		if _, hasCount := keyVault.Body.Attributes["count"]; hasCount {
+			continue
+		}
+		if _, hasForEach := keyVault.Body.Attributes["for_each"]; hasForEach {
+			continue
+		}
+
 		keyVaultLabel := ""
 		if len(keyVault.Labels) > 1 {
 			keyVaultLabel = keyVault.Labels[1]

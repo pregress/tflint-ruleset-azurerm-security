@@ -84,6 +84,47 @@ resource "azurerm_network_security_perimeter_association" "example2" {
 			Expected: helper.Issues{},
 		},
 		{
+			Name: "keyvault with count and NSP association with count",
+			Content: `
+resource "azurerm_key_vault" "example1" {
+  count = var.test ? 1 : 0
+}
+
+resource "azurerm_network_security_perimeter_association" "example1" {
+  count = var.test ? 1 : 0
+  resource_id                           = azurerm_key_vault.example1[0].id
+}`,
+			Expected: helper.Issues{},
+		},
+
+		{
+			Name: "keyvault with count and NSP association with count",
+			Content: `
+resource "azurerm_key_vault" "example1" {
+  count = var.test ? 1 : 0
+}
+
+resource "azurerm_key_vault" "example2" {
+  count = 1
+}
+
+resource "azurerm_network_security_perimeter_association" "example1" {
+  count = var.test ? 1 : 0
+  resource_id                           = azurerm_key_vault.example1[0].id
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermKeyVaultNetworkSecurityPerimeterAssociation(),
+					Message: "Key Vault 'example2' does not have an associated azurerm_network_security_perimeter_association",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 6, Column: 1},
+						End:      hcl.Pos{Line: 6, Column: 40},
+					},
+				},
+			},
+		},
+		{
 			Name: "no key vaults defined",
 			Content: `
 resource "azurerm_resource_group" "example" {
