@@ -79,9 +79,15 @@ func (r *AzurermStorageAccountNetworkSecurityPerimeterAssociation) Check(runner 
 						if root.Name == "azurerm_storage_account" {
 							if attrTraverse, ok := v[1].(hcl.TraverseAttr); ok {
 								storageAccountName := attrTraverse.Name
-								if idTraverse, ok := v[2].(hcl.TraverseAttr); ok {
-									if idTraverse.Name == "id" {
+								if len(v) == 3 {
+									if idTraverse, ok := v[2].(hcl.TraverseAttr); ok && idTraverse.Name == "id" {
 										associatedStorageAccounts[storageAccountName] = true
+									}
+								} else if len(v) == 4 {
+									if _, ok := v[2].(hcl.TraverseIndex); ok {
+										if idTraverse, ok := v[3].(hcl.TraverseAttr); ok && idTraverse.Name == "id" {
+											associatedStorageAccounts[storageAccountName] = true
+										}
 									}
 								}
 							}
@@ -94,6 +100,14 @@ func (r *AzurermStorageAccountNetworkSecurityPerimeterAssociation) Check(runner 
 
 	// Check each storage account to see if it has an NSP association
 	for _, storageAccount := range storageAccounts.Blocks {
+		// Skip storage accounts with count or for_each as they may not be created
+		if _, hasCount := storageAccount.Body.Attributes["count"]; hasCount {
+			continue
+		}
+		if _, hasForEach := storageAccount.Body.Attributes["for_each"]; hasForEach {
+			continue
+		}
+
 		storageAccountLabel := ""
 		if len(storageAccount.Labels) > 1 {
 			storageAccountLabel = storageAccount.Labels[1]

@@ -79,9 +79,15 @@ func (r *AzurermEventhubNamespaceNetworkSecurityPerimeterAssociation) Check(runn
 						if root.Name == "azurerm_eventhub_namespace" {
 							if attrTraverse, ok := v[1].(hcl.TraverseAttr); ok {
 								eventhubNamespaceName := attrTraverse.Name
-								if idTraverse, ok := v[2].(hcl.TraverseAttr); ok {
-									if idTraverse.Name == "id" {
+								if len(v) == 3 {
+									if idTraverse, ok := v[2].(hcl.TraverseAttr); ok && idTraverse.Name == "id" {
 										associatedEventhubNamespaces[eventhubNamespaceName] = true
+									}
+								} else if len(v) == 4 {
+									if _, ok := v[2].(hcl.TraverseIndex); ok {
+										if idTraverse, ok := v[3].(hcl.TraverseAttr); ok && idTraverse.Name == "id" {
+											associatedEventhubNamespaces[eventhubNamespaceName] = true
+										}
 									}
 								}
 							}
@@ -94,6 +100,14 @@ func (r *AzurermEventhubNamespaceNetworkSecurityPerimeterAssociation) Check(runn
 
 	// Check each eventhub namespace to see if it has an NSP association
 	for _, eventhubNamespace := range eventhubNamespaces.Blocks {
+		// Skip eventhub namespaces with count or for_each as they may not be created
+		if _, hasCount := eventhubNamespace.Body.Attributes["count"]; hasCount {
+			continue
+		}
+		if _, hasForEach := eventhubNamespace.Body.Attributes["for_each"]; hasForEach {
+			continue
+		}
+
 		eventhubNamespaceLabel := ""
 		if len(eventhubNamespace.Labels) > 1 {
 			eventhubNamespaceLabel = eventhubNamespace.Labels[1]

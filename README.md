@@ -17,7 +17,7 @@ You can install the plugin with `tflint --init`. Declare a config in `.tflint.hc
 plugin "azurerm-security" {
   enabled = true
 
-  version = "0.1.13"
+  version = "0.1.14"
   source  = "github.com/pregress/tflint-ruleset-azurerm-security"
 }
 ```

@@ -100,6 +100,22 @@ resource "azurerm_network_security_perimeter_association" "example2" {
 			Expected: helper.Issues{},
 		},
 		{
+			Name: "eventhub namespace with count and NSP association with count",
+			Content: `
+resource "azurerm_eventhub_namespace" "example1" {
+  count = var.test ? 1 : 0
+}
+
+resource "azurerm_network_security_perimeter_association" "example1" {
+  count = var.test ? 1 : 0
+  resource_id                           = azurerm_eventhub_namespace.example1[0].id
+}
+
+resource "azurerm_network_security_perimeter_association" "example2" {
+}`,
+			Expected: helper.Issues{},
+		},
+		{
 			Name: "no eventhub namespaces defined",
 			Content: `
 resource "azurerm_resource_group" "example" {
