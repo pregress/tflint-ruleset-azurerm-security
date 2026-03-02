@@ -1,11 +1,11 @@
 module github.com/terraform-linters/tflint-ruleset-azurerm-security
 
-go 1.24.0
+go 1.25
 
 require (
 	github.com/hashicorp/hcl/v2 v2.24.0
 	github.com/terraform-linters/tflint-plugin-sdk v0.23.1
-	github.com/zclconf/go-cty v1.17.0
+	github.com/zclconf/go-cty v1.18.0
 )
 
 require (
