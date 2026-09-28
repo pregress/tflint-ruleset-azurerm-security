@@ -22,7 +22,7 @@ resource "azurerm_storage_account" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
-					Message: "Consider changing public_network_access_enabled to false or add network_rules with default_action = \"Deny\"",
+					Message: "Consider changing public_network_access to Disabled or SecuredByPerimeter (or public_network_access_enabled to false), or add network_rules with default_action = \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 3, Column: 37},
@@ -39,7 +39,7 @@ resource "azurerm_storage_account" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
-					Message: "public_network_access_enabled is not defined and defaults to true, consider disabling it or adding network_rules with default_action = \"Deny\"",
+					Message: "public_network_access is not defined and defaults to Enabled, consider setting it to Disabled or SecuredByPerimeter, or adding network_rules with default_action = \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 2, Column: 1},
@@ -85,11 +85,103 @@ resource "azurerm_storage_account" "example" {
 			Expected: helper.Issues{
 				{
 					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
-					Message: "Consider changing public_network_access_enabled to false or add network_rules with default_action = \"Deny\"",
+					Message: "Consider changing public_network_access to Disabled or SecuredByPerimeter (or public_network_access_enabled to false), or add network_rules with default_action = \"Deny\"",
 					Range: hcl.Range{
 						Filename: "resource.tf",
 						Start:    hcl.Pos{Line: 3, Column: 37},
 						End:      hcl.Pos{Line: 3, Column: 41},
+					},
+				},
+			},
+		},
+		{
+			Name: "public network access Enabled",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access = "Enabled"
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
+					Message: "Consider changing public_network_access to Disabled or SecuredByPerimeter (or public_network_access_enabled to false), or add network_rules with default_action = \"Deny\"",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 3, Column: 29},
+						End:      hcl.Pos{Line: 3, Column: 38},
+					},
+				},
+			},
+		},
+		{
+			Name: "public network access Disabled",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access = "Disabled"
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "public network access SecuredByPerimeter",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access = "SecuredByPerimeter"
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "legacy enabled but public network access Disabled",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access_enabled = true
+    public_network_access         = "Disabled"
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "legacy disabled but public network access Enabled",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access_enabled = false
+    public_network_access         = "Enabled"
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "public network access Enabled with network rules default_action = Deny",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access = "Enabled"
+
+	network_rules {
+		default_action = "Deny"
+	}
+}`,
+			Expected: helper.Issues{},
+		},
+		{
+			Name: "legacy enabled and public network access Enabled",
+			Content: `
+resource "azurerm_storage_account" "example" {
+    public_network_access_enabled = true
+    public_network_access         = "Enabled"
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
+					Message: "Consider changing public_network_access to Disabled or SecuredByPerimeter (or public_network_access_enabled to false), or add network_rules with default_action = \"Deny\"",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 3, Column: 37},
+						End:      hcl.Pos{Line: 3, Column: 41},
+					},
+				},
+				{
+					Rule:    NewAzurermStorageAccountPublicNetworkAccessEnabled(),
+					Message: "Consider changing public_network_access to Disabled or SecuredByPerimeter (or public_network_access_enabled to false), or add network_rules with default_action = \"Deny\"",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start:    hcl.Pos{Line: 4, Column: 37},
+						End:      hcl.Pos{Line: 4, Column: 46},
 					},
 				},
 			},

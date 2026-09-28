@@ -11,13 +11,27 @@ resource "azurerm_storage_account" "example" {
 }
 ```
 
+The rule supports both the legacy `public_network_access_enabled` (bool) property and the newer `public_network_access` property (`Disabled`, `Enabled` or `SecuredByPerimeter`, defaults to `Enabled`). No issue is reported when any of the following is true:
+
+- `public_network_access` is set to `Disabled` or `SecuredByPerimeter`
+- `public_network_access_enabled` is set to `false`
+- a `network_rules` block has `default_action = "Deny"`
+
 ## Why
 
 Storage accounts with unrestricted public network access expose your data to potential security threats. By either disabling public network access altogether or implementing network rules with "Deny" as the default action, you can significantly reduce your storage account's attack surface.
 
 ## How to Fix
 
-Option 1: Disable public network access completely:
+Option 1: Disable public network access completely (or restrict it to a network security perimeter with `SecuredByPerimeter`):
+
+```hcl
+resource "azurerm_storage_account" "example" {
+    public_network_access = "Disabled"
+}
+```
+
+With older provider versions, use the legacy property instead:
 
 ```hcl
 resource "azurerm_storage_account" "example" {

@@ -1,25 +1,28 @@
 package rules
 
 import (
+	"github.com/hashicorp/hcl/v2"
 	"github.com/terraform-linters/tflint-plugin-sdk/hclext"
 	"github.com/terraform-linters/tflint-plugin-sdk/tflint"
 
 	"github.com/terraform-linters/tflint-ruleset-azurerm-security/project"
 )
 
-// AzurermStorageAccountPublicNetworkAccessEnabled checks that transparent data encryption is enabled
+// AzurermStorageAccountPublicNetworkAccessEnabled checks that public network access is restricted
 type AzurermStorageAccountPublicNetworkAccessEnabled struct {
 	tflint.DefaultRule
 
-	resourceType  string
-	attributeName string
+	resourceType        string
+	legacyAttributeName string
+	attributeName       string
 }
 
 // NewAzurermStorageAccountPublicNetworkAccessEnabled returns a new rule instance
 func NewAzurermStorageAccountPublicNetworkAccessEnabled() *AzurermStorageAccountPublicNetworkAccessEnabled {
 	return &AzurermStorageAccountPublicNetworkAccessEnabled{
-		resourceType:  "azurerm_storage_account",
-		attributeName: "public_network_access_enabled",
+		resourceType:        "azurerm_storage_account",
+		legacyAttributeName: "public_network_access_enabled",
+		attributeName:       "public_network_access",
 	}
 }
 
@@ -43,10 +46,11 @@ func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Link() string {
 	return project.ReferenceLink(r.Name())
 }
 
-// Check checks if transparent data encryption is enabled
+// Check checks if public network access is restricted
 func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Check(runner tflint.Runner) error {
 	resources, err := runner.GetResourceContent(r.resourceType, &hclext.BodySchema{
 		Attributes: []hclext.AttributeSchema{
+			{Name: r.legacyAttributeName},
 			{Name: r.attributeName},
 		},
 		Blocks: []hclext.BlockSchema{
@@ -88,30 +92,60 @@ func (r *AzurermStorageAccountPublicNetworkAccessEnabled) Check(runner tflint.Ru
 			continue
 		}
 
+		var insecureRanges []hcl.Range
+		secure := false
+
+		legacyAttribute, legacyExists := resource.Body.Attributes[r.legacyAttributeName]
+		if legacyExists {
+			err := runner.EvaluateExpr(legacyAttribute.Expr, func(val bool) error {
+				if val {
+					insecureRanges = append(insecureRanges, legacyAttribute.Expr.Range())
+				} else {
+					secure = true
+				}
+				return nil
+			}, nil)
+			if err != nil {
+				return err
+			}
+		}
+
 		attribute, exists := resource.Body.Attributes[r.attributeName]
-		if !exists && !hasSecureNetworkRules {
-			// If the attribute does not exist and there are no secure network rules, emit an issue
+		if exists {
+			err := runner.EvaluateExpr(attribute.Expr, func(val string) error {
+				if val == "Disabled" || val == "SecuredByPerimeter" {
+					secure = true
+				} else {
+					insecureRanges = append(insecureRanges, attribute.Expr.Range())
+				}
+				return nil
+			}, nil)
+			if err != nil {
+				return err
+			}
+		}
+
+		// If any of the attributes is set to a secure value, the configuration is secure
+		if secure {
+			continue
+		}
+
+		if !legacyExists && !exists && !hasSecureNetworkRules {
+			// If neither attribute exists and there are no network rules, emit an issue
 			runner.EmitIssue(
 				r,
-				"public_network_access_enabled is not defined and defaults to true, consider disabling it or adding network_rules with default_action = \"Deny\"",
+				"public_network_access is not defined and defaults to Enabled, consider setting it to Disabled or SecuredByPerimeter, or adding network_rules with default_action = \"Deny\"",
 				resource.DefRange,
 			)
 			continue
 		}
 
-		err := runner.EvaluateExpr(attribute.Expr, func(val bool) error {
-			if val {
-				runner.EmitIssue(
-					r,
-					"Consider changing public_network_access_enabled to false or add network_rules with default_action = \"Deny\"",
-					attribute.Expr.Range(),
-				)
-			}
-			return nil
-		}, nil)
-
-		if err != nil {
-			return err
+		for _, rng := range insecureRanges {
+			runner.EmitIssue(
+				r,
+				"Consider changing public_network_access to Disabled or SecuredByPerimeter (or public_network_access_enabled to false), or add network_rules with default_action = \"Deny\"",
+				rng,
+			)
 		}
 	}
 
