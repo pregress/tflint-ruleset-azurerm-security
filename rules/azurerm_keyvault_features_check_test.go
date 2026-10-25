@@ -349,30 +349,14 @@ resource "azurerm_key_vault" "example2" {
 			},
 		},
 		{
-			Name: "key vault with no provider block",
+			Name: "key vault with no provider block is not reported",
 			Content: `
 resource "azurerm_key_vault" "example" {
 }`,
-			Expected: helper.Issues{
-				{
-					Rule:    NewAzureRmKeyVaultFeaturesRule(),
-					Message: "No provider configuration found for Azure Key Vault resource",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start: hcl.Pos{
-							Line:   2,
-							Column: 1,
-						},
-						End: hcl.Pos{
-							Line:   2,
-							Column: 39,
-						},
-					},
-				},
-			},
+			Expected: helper.Issues{},
 		},
 		{
-			Name: "key vault with only a named provider and no provider attribute",
+			Name: "key vault with only a named provider and no provider attribute is not reported",
 			Content: `
 provider "azurerm" {
   alias = "prod"
@@ -386,26 +370,10 @@ provider "azurerm" {
 
 resource "azurerm_key_vault" "example" {
 }`,
-			Expected: helper.Issues{
-				{
-					Rule:    NewAzureRmKeyVaultFeaturesRule(),
-					Message: "No provider configuration found for Azure Key Vault resource",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start: hcl.Pos{
-							Line:   12,
-							Column: 1,
-						},
-						End: hcl.Pos{
-							Line:   12,
-							Column: 39,
-						},
-					},
-				},
-			},
+			Expected: helper.Issues{},
 		},
 		{
-			Name: "key vault naming a provider alias that does not exist",
+			Name: "key vault naming a provider alias that is not declared is not reported",
 			Content: `
 provider "azurerm" {
   alias = "prod"
@@ -420,26 +388,10 @@ provider "azurerm" {
 resource "azurerm_key_vault" "example" {
   provider = azurerm.missing
 }`,
-			Expected: helper.Issues{
-				{
-					Rule:    NewAzureRmKeyVaultFeaturesRule(),
-					Message: "No provider configuration found for Azure Key Vault resource",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start: hcl.Pos{
-							Line:   12,
-							Column: 1,
-						},
-						End: hcl.Pos{
-							Line:   12,
-							Column: 39,
-						},
-					},
-				},
-			},
+			Expected: helper.Issues{},
 		},
 		{
-			Name: "one key vault without a provider does not hide the checks on the others",
+			Name: "a key vault without a provider does not hide the checks on the others",
 			Content: `
 provider "azurerm" {
   alias = "prod"
@@ -458,21 +410,6 @@ resource "azurerm_key_vault" "matched" {
   provider = azurerm.prod
 }`,
 			Expected: helper.Issues{
-				{
-					Rule:    NewAzureRmKeyVaultFeaturesRule(),
-					Message: "No provider configuration found for Azure Key Vault resource",
-					Range: hcl.Range{
-						Filename: "resource.tf",
-						Start: hcl.Pos{
-							Line:   12,
-							Column: 1,
-						},
-						End: hcl.Pos{
-							Line:   12,
-							Column: 38,
-						},
-					},
-				},
 				{
 					Rule:    NewAzureRmKeyVaultFeaturesRule(),
 					Message: "purge_soft_delete_on_destroy must be set to true in key_vault features of provider prod",

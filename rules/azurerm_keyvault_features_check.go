@@ -89,12 +89,9 @@ func (r *AzureRmKeyVaultFeaturesRule) Check(runner tflint.Runner) error {
 	for _, resource := range resources.Blocks {
 		targetProvider := r.findTargetProvider(resource, providers.Blocks)
 
+		// The provider is not declared in this module: a reusable module gets it from its caller, with an
+		// inherited default provider or a configuration_aliases entry. There is nothing here to check.
 		if targetProvider == nil {
-			runner.EmitIssue(
-				r,
-				"No provider configuration found for Azure Key Vault resource",
-				resource.DefRange,
-			)
 			continue
 		}
 
