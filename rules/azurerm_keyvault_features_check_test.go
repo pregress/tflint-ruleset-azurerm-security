@@ -348,6 +348,148 @@ resource "azurerm_key_vault" "example2" {
 				},
 			},
 		},
+		{
+			Name: "key vault with no provider block",
+			Content: `
+resource "azurerm_key_vault" "example" {
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzureRmKeyVaultFeaturesRule(),
+					Message: "No provider configuration found for Azure Key Vault resource",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   2,
+							Column: 1,
+						},
+						End: hcl.Pos{
+							Line:   2,
+							Column: 39,
+						},
+					},
+				},
+			},
+		},
+		{
+			Name: "key vault with only a named provider and no provider attribute",
+			Content: `
+provider "azurerm" {
+  alias = "prod"
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy = true
+      recover_soft_deleted_key_vaults = true
+    }
+  }
+}
+
+resource "azurerm_key_vault" "example" {
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzureRmKeyVaultFeaturesRule(),
+					Message: "No provider configuration found for Azure Key Vault resource",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   12,
+							Column: 1,
+						},
+						End: hcl.Pos{
+							Line:   12,
+							Column: 39,
+						},
+					},
+				},
+			},
+		},
+		{
+			Name: "key vault naming a provider alias that does not exist",
+			Content: `
+provider "azurerm" {
+  alias = "prod"
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy = true
+      recover_soft_deleted_key_vaults = true
+    }
+  }
+}
+
+resource "azurerm_key_vault" "example" {
+  provider = azurerm.missing
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzureRmKeyVaultFeaturesRule(),
+					Message: "No provider configuration found for Azure Key Vault resource",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   12,
+							Column: 1,
+						},
+						End: hcl.Pos{
+							Line:   12,
+							Column: 39,
+						},
+					},
+				},
+			},
+		},
+		{
+			Name: "one key vault without a provider does not hide the checks on the others",
+			Content: `
+provider "azurerm" {
+  alias = "prod"
+  features {
+    key_vault {
+      purge_soft_delete_on_destroy = false
+      recover_soft_deleted_key_vaults = true
+    }
+  }
+}
+
+resource "azurerm_key_vault" "orphan" {
+}
+
+resource "azurerm_key_vault" "matched" {
+  provider = azurerm.prod
+}`,
+			Expected: helper.Issues{
+				{
+					Rule:    NewAzureRmKeyVaultFeaturesRule(),
+					Message: "No provider configuration found for Azure Key Vault resource",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   12,
+							Column: 1,
+						},
+						End: hcl.Pos{
+							Line:   12,
+							Column: 38,
+						},
+					},
+				},
+				{
+					Rule:    NewAzureRmKeyVaultFeaturesRule(),
+					Message: "purge_soft_delete_on_destroy must be set to true in key_vault features of provider prod",
+					Range: hcl.Range{
+						Filename: "resource.tf",
+						Start: hcl.Pos{
+							Line:   6,
+							Column: 7,
+						},
+						End: hcl.Pos{
+							Line:   6,
+							Column: 43,
+						},
+					},
+				},
+			},
+		},
 	}
 
 	for _, tc := range cases {

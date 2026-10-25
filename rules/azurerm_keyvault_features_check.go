@@ -88,7 +88,6 @@ func (r *AzureRmKeyVaultFeaturesRule) Check(runner tflint.Runner) error {
 
 	for _, resource := range resources.Blocks {
 		targetProvider := r.findTargetProvider(resource, providers.Blocks)
-		providerDisplayName := r.getProviderDisplayName(targetProvider)
 
 		if targetProvider == nil {
 			runner.EmitIssue(
@@ -98,6 +97,8 @@ func (r *AzureRmKeyVaultFeaturesRule) Check(runner tflint.Runner) error {
 			)
 			continue
 		}
+
+		providerDisplayName := r.getProviderDisplayName(targetProvider)
 
 		// Check features block
 		featuresBlock := r.findFeaturesBlock(targetProvider)
